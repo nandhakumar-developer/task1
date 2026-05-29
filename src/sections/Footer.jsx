@@ -3,74 +3,275 @@ import { ArrowUp, ArrowRight } from "lucide-react";
 
 export default function Footer() {
   const cols = {
-    Services: ["UI/UX Design", "Web Development", "Brand Identity", "Digital Marketing", "Consulting"],
+    Services: [
+      "UI/UX Design",
+      "Web Development",
+      "Brand Identity",
+      "Digital Marketing",
+      "Consulting",
+    ],
     Company: ["About Us", "Portfolio", "Process", "Careers", "Blog"],
     Connect: ["Twitter / X", "LinkedIn", "Dribbble", "Instagram", "Behance"],
   };
 
   return (
-    <footer className="bg-[var(--black)] text-white">
+    <footer
+      style={{
+        background: "var(--black)",
+        color: "#FFFFFF",
+      }}
+    >
       {/* CTA Banner */}
-      <div className="border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div
+        style={{
+          borderBottom: "1px solid rgba(255,255,255,0.1)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            padding: "64px 24px",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "32px",
+          }}
+        >
           <div>
-            <p className="text-white/50 font-mono text-sm uppercase tracking-widest mb-2">
+            <p
+              style={{
+                color: "rgba(255,255,255,0.5)",
+                fontFamily: "'Space Mono', monospace",
+                fontSize: "14px",
+                textTransform: "uppercase",
+                letterSpacing: "0.2em",
+                marginBottom: "8px",
+              }}
+            >
               Start a project
             </p>
+
             <h3
-              className="text-4xl text-white"
-              style={{ fontFamily: "var(--font-display)" }}
+              style={{
+                fontSize: "clamp(2rem, 5vw, 4rem)",
+                lineHeight: 1.1,
+                color: "#FFFFFF",
+                margin: 0,
+                fontFamily: "var(--font-display)",
+              }}
             >
               Let's build something{" "}
-              <em className="text-[var(--orange)] not-italic">extraordinary.</em>
+              <em
+                style={{
+                  color: "var(--orange)",
+                  fontStyle: "normal",
+                }}
+              >
+                extraordinary.
+              </em>
             </h3>
           </div>
+
           <a
             href="#contact"
-            className="flex-shrink-0 inline-flex items-center gap-3 bg-[var(--orange)] hover:bg-[var(--orange-dark)] text-white px-8 py-4 rounded-2xl font-semibold text-[15px] transition-all duration-300 hover:shadow-xl hover:shadow-orange-900/40 group"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "12px",
+              background: "var(--orange)",
+              color: "#FFFFFF",
+              padding: "16px 32px",
+              borderRadius: "18px",
+              fontWeight: 600,
+              fontSize: "15px",
+              textDecoration: "none",
+              transition: "all 0.3s ease",
+              whiteSpace: "nowrap",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--orange-dark)";
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow =
+                "0 16px 40px rgba(255,107,44,0.35)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "var(--orange)";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
           >
             Get Started
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={16} />
           </a>
         </div>
       </div>
 
-      {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
+      {/* Main Footer */}
+      <div
+        style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          padding: "64px 24px",
+        }}
+      >
+        {/* Grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            gap: "48px",
+            marginBottom: "64px",
+          }}
+        >
           {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <a href="#" className="flex items-center gap-3 mb-5 group">
-              <div className="w-10 h-10 rounded-xl bg-[var(--orange)] flex items-center justify-center">
-                <span className="font-bold text-white text-lg">N</span>
+          <div>
+            <a
+              href="#"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                marginBottom: "20px",
+                textDecoration: "none",
+              }}
+            >
+              <div
+                style={{
+                  width: "42px",
+                  height: "42px",
+                  borderRadius: "14px",
+                  background: "var(--orange)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <span
+                  style={{
+                    fontWeight: 700,
+                    color: "#FFFFFF",
+                    fontSize: "18px",
+                  }}
+                >
+                  N
+                </span>
               </div>
-              <span className="text-white font-semibold text-[17px] tracking-tight">
-                Nexora<span className="text-[var(--orange)]">.</span>
+
+              <span
+                style={{
+                  color: "#FFFFFF",
+                  fontWeight: 600,
+                  fontSize: "18px",
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Nexora
+                <span style={{ color: "var(--orange)" }}>.</span>
               </span>
             </a>
-            <p className="text-white/40 text-[14px] leading-relaxed font-light max-w-[200px]">
-              A modern creative agency building exceptional digital experiences.
+
+            <p
+              style={{
+                color: "rgba(255,255,255,0.45)",
+                fontSize: "14px",
+                lineHeight: 1.7,
+                fontWeight: 300,
+                maxWidth: "240px",
+                margin: 0,
+              }}
+            >
+              A modern creative agency building exceptional digital
+              experiences.
             </p>
-            <div className="mt-6 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-400 relative">
-                <span className="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-60" />
+
+            <div
+              style={{
+                marginTop: "24px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <span
+                style={{
+                  width: "8px",
+                  height: "8px",
+                  borderRadius: "50%",
+                  background: "#4ADE80",
+                  position: "relative",
+                  display: "inline-block",
+                }}
+              >
+                <span
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: "50%",
+                    background: "#4ADE80",
+                    animation: "ping 1.5s infinite",
+                    opacity: 0.7,
+                  }}
+                />
               </span>
-              <span className="text-white/40 text-[12px] font-mono">Available for projects</span>
+
+              <span
+                style={{
+                  color: "rgba(255,255,255,0.45)",
+                  fontSize: "12px",
+                  fontFamily: "'Space Mono', monospace",
+                }}
+              >
+                Available for projects
+              </span>
             </div>
           </div>
 
           {/* Links */}
           {Object.entries(cols).map(([cat, links]) => (
             <div key={cat}>
-              <h4 className="text-white/60 text-[11px] font-mono uppercase tracking-widest mb-5">
+              <h4
+                style={{
+                  color: "rgba(255,255,255,0.55)",
+                  fontSize: "11px",
+                  fontFamily: "'Space Mono', monospace",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.18em",
+                  marginBottom: "20px",
+                }}
+              >
                 {cat}
               </h4>
-              <ul className="space-y-3">
+
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  margin: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "14px",
+                }}
+              >
                 {links.map((link) => (
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-white/50 hover:text-white text-[14px] transition-colors duration-200"
+                      style={{
+                        color: "rgba(255,255,255,0.5)",
+                        textDecoration: "none",
+                        fontSize: "14px",
+                        transition: "color 0.25s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = "#FFFFFF";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color =
+                          "rgba(255,255,255,0.5)";
+                      }}
                     >
                       {link}
                     </a>
@@ -81,25 +282,93 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-white/30 text-[13px] font-mono">
+        {/* Bottom Bar */}
+        <div
+          style={{
+            borderTop: "1px solid rgba(255,255,255,0.1)",
+            paddingTop: "32px",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "20px",
+          }}
+        >
+          <p
+            style={{
+              color: "rgba(255,255,255,0.3)",
+              fontSize: "13px",
+              fontFamily: "'Space Mono', monospace",
+              margin: 0,
+            }}
+          >
             © 2026 Nexora Studio. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "24px",
+              flexWrap: "wrap",
+            }}
+          >
             {["Privacy", "Terms", "Cookies"].map((l) => (
-              <a key={l} href="#" className="text-white/30 hover:text-white/70 text-[13px] font-mono transition-colors">
+              <a
+                key={l}
+                href="#"
+                style={{
+                  color: "rgba(255,255,255,0.3)",
+                  textDecoration: "none",
+                  fontSize: "13px",
+                  fontFamily: "'Space Mono', monospace",
+                  transition: "color 0.25s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color =
+                    "rgba(255,255,255,0.7)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color =
+                    "rgba(255,255,255,0.3)";
+                }}
+              >
                 {l}
               </a>
             ))}
           </div>
+
           <motion.button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[var(--orange)] flex items-center justify-center transition-all duration-300"
-            whileHover={{ scale: 1.1 }}
+            onClick={() =>
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              })
+            }
+            whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
+            style={{
+              width: "42px",
+              height: "42px",
+              borderRadius: "14px",
+              border: "none",
+              background: "rgba(255,255,255,0.08)",
+              color: "#FFFFFF",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "var(--orange)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background =
+                "rgba(255,255,255,0.08)";
+            }}
           >
-            <ArrowUp className="w-4 h-4" />
+            <ArrowUp size={16} />
           </motion.button>
         </div>
       </div>

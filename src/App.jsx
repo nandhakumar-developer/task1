@@ -8,6 +8,8 @@ import TestimonialsSection from "./sections/TestimonialsSection";
 import ContactSection from "./sections/ContactSection";
 import Footer from "./sections/Footer";
 
+
+
 export default function App() {
   return (
     <div style={{ backgroundColor: "var(--white)" }}>

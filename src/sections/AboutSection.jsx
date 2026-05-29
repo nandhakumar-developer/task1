@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight } from "lucide-react";
-import { fadeUp, stagger, slideLeft, slideRight } from "../utils/animations";
+import {
+  fadeUp,
+  stagger,
+  slideLeft,
+} from "../utils/animations";
 
 const strengths = [
   "Strategy-first approach to every project",
@@ -9,150 +13,400 @@ const strengths = [
   "Post-launch support & growth partnerships",
 ];
 
+const stats = [
+  {
+    n: "50+",
+    l: "Projects",
+    sub: "Successfully delivered",
+  },
+  {
+    n: "20+",
+    l: "Clients",
+    sub: "Around the globe",
+  },
+  {
+    n: "98%",
+    l: "Retention",
+    sub: "Client return rate",
+  },
+  {
+    n: "12",
+    l: "Awards",
+    sub: "Industry recognition",
+  },
+];
+
 export default function AboutSection() {
   return (
-    <section id="about" className="py-28 px-6 lg:px-10 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        {/* Top label */}
+    <section
+      id="about"
+      style={{
+        padding: "120px 24px",
+        background: "#FFFFFF",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          width: "100%",
+        }}
+      >
+        {/* Label */}
         <motion.span
-          className="inline-block text-[var(--orange)] font-mono text-sm tracking-widest uppercase mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          style={{
+            display: "inline-block",
+            color: "#FF6B2C",
+            fontFamily: "'Space Mono', monospace",
+            fontSize: "13px",
+            letterSpacing: "2px",
+            textTransform: "uppercase",
+            marginBottom: "64px",
+          }}
         >
           — Who We Are
         </motion.span>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left: image collage */}
+        {/* Main Grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "80px",
+            alignItems: "center",
+          }}
+        >
+          {/* Left Images */}
           <motion.div
-            className="relative h-[520px] hidden lg:block"
             variants={slideLeft}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
+            style={{
+              position: "relative",
+              height: "540px",
+              display: window.innerWidth < 1024 ? "none" : "block",
+            }}
           >
-            {/* Main image */}
-            <div className="absolute top-0 left-0 w-[72%] h-[75%] rounded-3xl overflow-hidden shadow-2xl">
+            {/* Main Image */}
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "72%",
+                height: "76%",
+                borderRadius: "32px",
+                overflow: "hidden",
+                boxShadow: "0 30px 60px rgba(0,0,0,0.12)",
+              }}
+            >
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80&auto=format"
                 alt="Team collaboration"
-                className="w-full h-full object-cover"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-br from-[var(--orange)]/10 to-transparent" />
+
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(to bottom right, rgba(255,107,44,0.12), transparent)",
+                }}
+              />
             </div>
 
-            {/* Secondary image */}
-            <div className="absolute bottom-0 right-0 w-[55%] h-[55%] rounded-3xl overflow-hidden shadow-xl border-4 border-white">
+            {/* Secondary Image */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+                width: "56%",
+                height: "56%",
+                borderRadius: "32px",
+                overflow: "hidden",
+                border: "4px solid white",
+                boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
+              }}
+            >
               <img
                 src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80&auto=format"
                 alt="Design process"
-                className="w-full h-full object-cover"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
               />
             </div>
 
-            {/* Floating badge */}
+            {/* Floating Card */}
             <motion.div
-              className="absolute top-8 right-6 bg-white rounded-2xl shadow-lg px-5 py-4 border border-[var(--border)]"
               animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              style={{
+                position: "absolute",
+                top: "32px",
+                right: "24px",
+                background: "#FFFFFF",
+                borderRadius: "24px",
+                padding: "20px 24px",
+                border: "1px solid #EAE6E1",
+                boxShadow: "0 15px 35px rgba(0,0,0,0.08)",
+              }}
             >
               <div
-                className="text-3xl font-bold text-[var(--orange)]"
-                style={{ fontFamily: "var(--font-display)" }}
+                style={{
+                  fontSize: "40px",
+                  fontWeight: 700,
+                  color: "#FF6B2C",
+                  lineHeight: 1,
+                  fontFamily:
+                    "'DM Serif Display', Georgia, serif",
+                }}
               >
                 5+
               </div>
-              <div className="text-[var(--text-muted)] text-xs font-medium mt-0.5">
+
+              <div
+                style={{
+                  color: "#8A8480",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  marginTop: "6px",
+                }}
+              >
                 Years of Excellence
               </div>
             </motion.div>
 
-            {/* Orange accent blob */}
-            <div className="absolute -bottom-8 -left-8 w-32 h-32 rounded-full bg-[var(--orange-pale)] -z-10" />
+            {/* Background Blob */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: "-40px",
+                left: "-40px",
+                width: "140px",
+                height: "140px",
+                borderRadius: "50%",
+                background: "#FFF0E8",
+                zIndex: -1,
+              }}
+            />
           </motion.div>
 
-          {/* Right: content */}
+          {/* Right Content */}
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="space-y-8"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "32px",
+            }}
           >
             <motion.h2
-              className="text-[clamp(2.2rem,4.5vw,4rem)] text-[var(--black)] leading-[1.1]"
-              style={{ fontFamily: "var(--font-display)" }}
               variants={fadeUp}
+              style={{
+                fontFamily:
+                  "'DM Serif Display', Georgia, serif",
+                fontSize: "clamp(2.3rem, 5vw, 4.3rem)",
+                lineHeight: 1.1,
+                color: "#0A0A0A",
+                margin: 0,
+              }}
             >
               A studio that{" "}
-              <em className="text-[var(--orange)] not-italic">thinks differently</em>{" "}
+              <span style={{ color: "#FF6B2C" }}>
+                thinks differently
+              </span>{" "}
               about digital.
             </motion.h2>
 
             <motion.p
-              className="text-[var(--text-body)] text-lg leading-relaxed font-light"
               variants={fadeUp}
+              style={{
+                color: "#4A4540",
+                fontSize: "18px",
+                lineHeight: 1.8,
+                fontWeight: 300,
+                margin: 0,
+              }}
             >
-              Nexora Studio was founded in 2019 with a mission to close the gap between design and business impact. We're a small team with big ambitions — merging strategic thinking with world-class craft.
+              Nexora Studio was founded in 2019 with a
+              mission to close the gap between design and
+              business impact. We're a small team with big
+              ambitions — merging strategic thinking with
+              world-class craft.
             </motion.p>
 
             <motion.p
-              className="text-[var(--text-body)] text-lg leading-relaxed font-light"
               variants={fadeUp}
+              style={{
+                color: "#4A4540",
+                fontSize: "18px",
+                lineHeight: 1.8,
+                fontWeight: 300,
+                margin: 0,
+              }}
             >
-              We believe every touchpoint is an opportunity to communicate value. From the first pixel to the last line of code, we obsess over the details that matter.
+              We believe every touchpoint is an opportunity
+              to communicate value. From the first pixel to
+              the last line of code, we obsess over the
+              details that matter.
             </motion.p>
 
-            <motion.ul className="space-y-3" variants={stagger}>
+            {/* Strengths */}
+            <motion.div
+              variants={stagger}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "18px",
+              }}
+            >
               {strengths.map((s, i) => (
-                <motion.li key={i} className="flex items-start gap-3" variants={fadeUp}>
+                <motion.div
+                  key={i}
+                  variants={fadeUp}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "14px",
+                  }}
+                >
                   <CheckCircle2
-                    className="w-5 h-5 mt-0.5 flex-shrink-0"
-                    style={{ color: "var(--orange)" }}
+                    size={20}
+                    color="#FF6B2C"
+                    style={{ flexShrink: 0, marginTop: "2px" }}
                   />
-                  <span className="text-[var(--text-body)] font-medium">{s}</span>
-                </motion.li>
-              ))}
-            </motion.ul>
 
+                  <span
+                    style={{
+                      color: "#4A4540",
+                      fontWeight: 500,
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    {s}
+                  </span>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {/* CTA */}
             <motion.a
-              href="#contact"
-              className="inline-flex items-center gap-3 bg-[var(--black)] text-white px-7 py-4 rounded-2xl font-semibold text-[15px] hover:bg-[var(--charcoal)] transition-all duration-300 group"
               variants={fadeUp}
+              href="#contact"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "12px",
+                background: "#0A0A0A",
+                color: "#FFFFFF",
+                padding: "16px 28px",
+                borderRadius: "18px",
+                textDecoration: "none",
+                fontWeight: 600,
+                fontSize: "15px",
+                width: "fit-content",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "#1A1A1A";
+                e.currentTarget.style.transform =
+                  "translateY(-2px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "#0A0A0A";
+                e.currentTarget.style.transform =
+                  "translateY(0)";
+              }}
             >
               Work with us
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={16} />
             </motion.a>
           </motion.div>
         </div>
 
-        {/* Stats row */}
+        {/* Stats */}
         <motion.div
-          className="mt-24 grid grid-cols-2 md:grid-cols-4 gap-px bg-[var(--border)] rounded-3xl overflow-hidden"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
+          style={{
+            marginTop: "96px",
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(220px, 1fr))",
+            gap: "1px",
+            background: "#EAE6E1",
+            borderRadius: "32px",
+            overflow: "hidden",
+          }}
         >
-          {[
-            { n: "50+", l: "Projects", sub: "Successfully delivered" },
-            { n: "20+", l: "Clients", sub: "Around the globe" },
-            { n: "98%", l: "Retention", sub: "Client return rate" },
-            { n: "12", l: "Awards", sub: "Industry recognition" },
-          ].map((s, i) => (
+          {stats.map((s, i) => (
             <div
               key={i}
-              className="bg-white px-8 py-8 hover:bg-[var(--orange-pale)] transition-colors duration-300 group"
+              style={{
+                background: "#FFFFFF",
+                padding: "36px",
+                transition: "all 0.3s ease",
+              }}
             >
               <div
-                className="text-4xl font-bold text-[var(--black)] group-hover:text-[var(--orange)] transition-colors"
-                style={{ fontFamily: "var(--font-display)" }}
+                style={{
+                  fontFamily:
+                    "'DM Serif Display', Georgia, serif",
+                  fontSize: "48px",
+                  fontWeight: 700,
+                  color: "#0A0A0A",
+                  lineHeight: 1,
+                  marginBottom: "8px",
+                }}
               >
                 {s.n}
               </div>
-              <div className="text-[var(--text-body)] font-semibold mt-1">{s.l}</div>
-              <div className="text-[var(--text-muted)] text-[12px] mt-0.5 font-mono">{s.sub}</div>
+
+              <div
+                style={{
+                  color: "#4A4540",
+                  fontWeight: 600,
+                  marginBottom: "4px",
+                  fontSize: "15px",
+                }}
+              >
+                {s.l}
+              </div>
+
+              <div
+                style={{
+                  color: "#8A8480",
+                  fontSize: "12px",
+                  fontFamily:
+                    "'Space Mono', monospace",
+                }}
+              >
+                {s.sub}
+              </div>
             </div>
           ))}
         </motion.div>

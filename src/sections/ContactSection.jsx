@@ -1,199 +1,632 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle2 } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  ArrowRight,
+  CheckCircle2,
+} from "lucide-react";
+
 import { fadeUp, stagger } from "../utils/animations";
 
 export default function ContactSection() {
-  const [form, setForm] = useState({ name: "", email: "", budget: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    budget: "",
+    message: "",
+  });
+
   const [errors, setErrors] = useState({});
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
 
-  const budgets = ["< $5k", "$5k–$15k", "$15k–$30k", "$30k+", "Let's talk"];
+  const budgets = [
+    "< $5k",
+    "$5k–$15k",
+    "$15k–$30k",
+    "$30k+",
+    "Let's talk",
+  ];
 
   const validate = () => {
     const e = {};
-    if (!form.name.trim()) e.name = "Required";
-    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = "Valid email required";
-    if (!form.message.trim()) e.message = "Required";
+
+    if (!form.name.trim()) {
+      e.name = "Required";
+    }
+
+    if (
+      !form.email.trim() ||
+      !/\S+@\S+\.\S+/.test(form.email)
+    ) {
+      e.email = "Valid email required";
+    }
+
+    if (!form.message.trim()) {
+      e.message = "Required";
+    }
+
     return e;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const e_ = validate();
-    if (Object.keys(e_).length) { setErrors(e_); return; }
+
+    if (Object.keys(e_).length) {
+      setErrors(e_);
+      return;
+    }
+
     setSending(true);
-    setTimeout(() => { setSending(false); setSent(true); setForm({ name: "", email: "", budget: "", message: "" }); }, 1500);
+
+    setTimeout(() => {
+      setSending(false);
+      setSent(true);
+
+      setForm({
+        name: "",
+        email: "",
+        budget: "",
+        message: "",
+      });
+    }, 1500);
   };
 
   return (
-    <section id="contact" className="py-28 px-6 lg:px-10 bg-[var(--mist)] relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] rounded-full bg-[var(--orange-pale)] blur-[100px] opacity-70 pointer-events-none" />
+    <section
+      id="contact"
+      style={{
+        padding: "120px 24px",
+        background: "#F7F5F3",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Background Blur */}
+      <div
+        style={{
+          position: "absolute",
+          top: "-120px",
+          left: "-120px",
+          width: "420px",
+          height: "420px",
+          borderRadius: "50%",
+          background: "#FFF0E8",
+          filter: "blur(120px)",
+          opacity: 0.8,
+          pointerEvents: "none",
+        }}
+      />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div
+        style={{
+          maxWidth: "1280px",
+          margin: "0 auto",
+          position: "relative",
+          zIndex: 2,
+        }}
+      >
         {/* Header */}
         <motion.div
-          className="text-center mb-16"
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
+          style={{
+            textAlign: "center",
+            marginBottom: "72px",
+          }}
         >
           <motion.span
-            className="inline-block text-[var(--orange)] font-mono text-sm tracking-widest uppercase mb-4"
             variants={fadeUp}
+            style={{
+              display: "inline-block",
+              color: "#FF6B2C",
+              fontFamily: "'Space Mono', monospace",
+              fontSize: "13px",
+              letterSpacing: "2px",
+              textTransform: "uppercase",
+              marginBottom: "18px",
+            }}
           >
             — Get In Touch
           </motion.span>
+
           <motion.h2
-            className="text-[clamp(2.5rem,5vw,4.5rem)] text-[var(--black)]"
-            style={{ fontFamily: "var(--font-display)" }}
             variants={fadeUp}
+            style={{
+              fontFamily:
+                "'DM Serif Display', Georgia, serif",
+              fontSize: "clamp(2.6rem, 5vw, 4.8rem)",
+              lineHeight: 1,
+              color: "#0A0A0A",
+              margin: 0,
+            }}
           >
             Ready to build
             <br />
-            <em className="text-[var(--orange)] not-italic">something great?</em>
+            <span style={{ color: "#FF6B2C" }}>
+              something great?
+            </span>
           </motion.h2>
+
           <motion.p
-            className="text-[var(--text-body)] text-lg max-w-lg mx-auto mt-4 font-light"
             variants={fadeUp}
+            style={{
+              color: "#4A4540",
+              fontSize: "18px",
+              lineHeight: 1.8,
+              fontWeight: 300,
+              maxWidth: "620px",
+              margin: "24px auto 0",
+            }}
           >
-            Tell us about your project and let's create something remarkable together.
+            Tell us about your project and let's create
+            something remarkable together.
           </motion.p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-5 gap-8 items-start">
-          {/* Left panel */}
+        {/* Main Grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "32px",
+            alignItems: "start",
+          }}
+        >
+          {/* Left Side */}
           <motion.div
-            className="lg:col-span-2 space-y-6"
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "24px",
+            }}
           >
-            {/* Info cards */}
             {[
-              { icon: Mail, title: "Email", val: "hello@nexora.studio", color: "var(--orange)" },
-              { icon: Phone, title: "Phone", val: "+1 (555) 123-4567", color: "var(--charcoal)" },
-              { icon: MapPin, title: "Location", val: "San Francisco, CA", color: "var(--orange)" },
+              {
+                icon: Mail,
+                title: "Email",
+                val: "hello@nexora.studio",
+                color: "#FF6B2C",
+              },
+              {
+                icon: Phone,
+                title: "Phone",
+                val: "+1 (555) 123-4567",
+                color: "#1A1A1A",
+              },
+              {
+                icon: MapPin,
+                title: "Location",
+                val: "San Francisco, CA",
+                color: "#FF6B2C",
+              },
             ].map((item, i) => (
               <div
                 key={i}
-                className="flex items-start gap-4 bg-white rounded-2xl p-5 border border-[var(--border)] hover:border-[var(--orange)]/30 hover:shadow-md transition-all duration-300"
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "18px",
+                  background: "#FFFFFF",
+                  border: "1px solid #EAE6E1",
+                  borderRadius: "24px",
+                  padding: "24px",
+                  transition: "all 0.3s ease",
+                }}
               >
                 <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: `${item.color}15` }}
+                  style={{
+                    width: "52px",
+                    height: "52px",
+                    borderRadius: "16px",
+                    background: `${item.color}15`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
                 >
-                  <item.icon className="w-5 h-5" style={{ color: item.color }} />
+                  <item.icon
+                    size={22}
+                    color={item.color}
+                  />
                 </div>
+
                 <div>
-                  <p className="text-[var(--text-muted)] text-[12px] font-mono uppercase tracking-wider mb-0.5">
+                  <p
+                    style={{
+                      color: "#8A8480",
+                      fontSize: "12px",
+                      fontFamily:
+                        "'Space Mono', monospace",
+                      textTransform: "uppercase",
+                      letterSpacing: "1px",
+                      marginBottom: "6px",
+                    }}
+                  >
                     {item.title}
                   </p>
-                  <p className="text-[var(--black)] font-medium">{item.val}</p>
+
+                  <p
+                    style={{
+                      color: "#0A0A0A",
+                      fontWeight: 600,
+                      fontSize: "16px",
+                      margin: 0,
+                    }}
+                  >
+                    {item.val}
+                  </p>
                 </div>
               </div>
             ))}
 
-            {/* Availability chip */}
-            <div className="bg-[var(--charcoal)] rounded-2xl p-6 text-white">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-2.5 h-2.5 rounded-full bg-green-400 relative">
-                  <span className="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-75" />
+            {/* Availability Card */}
+            <div
+              style={{
+                background: "#111111",
+                borderRadius: "28px",
+                padding: "28px",
+                color: "#FFFFFF",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginBottom: "18px",
+                }}
+              >
+                <span
+                  style={{
+                    width: "10px",
+                    height: "10px",
+                    borderRadius: "50%",
+                    background: "#4ADE80",
+                    position: "relative",
+                  }}
+                >
+                  <span
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: "50%",
+                      background: "#4ADE80",
+                      opacity: 0.5,
+                      animation:
+                        "pulse 1.5s infinite",
+                    }}
+                  />
                 </span>
-                <span className="text-[12px] font-mono uppercase tracking-wider text-white/60">
+
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "rgba(255,255,255,0.6)",
+                    fontFamily:
+                      "'Space Mono', monospace",
+                    textTransform: "uppercase",
+                    letterSpacing: "1px",
+                  }}
+                >
                   Currently Available
                 </span>
               </div>
-              <p className="text-[14px] text-white/70 leading-relaxed font-light">
-                We take on 2–3 new clients per month. Our earliest availability is{" "}
-                <span className="text-[var(--orange)] font-semibold">June 2026.</span>
+
+              <p
+                style={{
+                  color: "rgba(255,255,255,0.7)",
+                  lineHeight: 1.8,
+                  fontSize: "15px",
+                  fontWeight: 300,
+                  margin: 0,
+                }}
+              >
+                We take on 2–3 new clients per month.
+                Our earliest availability is{" "}
+                <span
+                  style={{
+                    color: "#FF6B2C",
+                    fontWeight: 600,
+                  }}
+                >
+                  June 2026.
+                </span>
               </p>
             </div>
           </motion.div>
 
-          {/* Form */}
+          {/* Right Form */}
           <motion.div
-            className="lg:col-span-3 bg-white rounded-3xl p-8 lg:p-10 border border-[var(--border)] shadow-sm"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.15 }}
+            transition={{
+              duration: 0.7,
+              delay: 0.15,
+            }}
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid #EAE6E1",
+              borderRadius: "36px",
+              padding: "42px",
+              boxShadow:
+                "0 10px 30px rgba(0,0,0,0.04)",
+            }}
           >
             {sent ? (
               <motion.div
-                className="flex flex-col items-center justify-center h-72 text-center"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{
+                  opacity: 0,
+                  scale: 0.9,
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                style={{
+                  minHeight: "420px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                }}
               >
-                <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mb-5">
-                  <CheckCircle2 className="w-8 h-8 text-green-500" />
+                <div
+                  style={{
+                    width: "72px",
+                    height: "72px",
+                    borderRadius: "50%",
+                    background: "#ECFDF3",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "24px",
+                  }}
+                >
+                  <CheckCircle2
+                    size={34}
+                    color="#22C55E"
+                  />
                 </div>
+
                 <h3
-                  className="text-2xl text-[var(--black)] mb-2"
-                  style={{ fontFamily: "var(--font-display)" }}
+                  style={{
+                    fontFamily:
+                      "'DM Serif Display', Georgia, serif",
+                    fontSize: "36px",
+                    marginBottom: "12px",
+                    color: "#0A0A0A",
+                  }}
                 >
                   Message received!
                 </h3>
-                <p className="text-[var(--text-muted)] font-light">
+
+                <p
+                  style={{
+                    color: "#8A8480",
+                    fontWeight: 300,
+                    fontSize: "16px",
+                  }}
+                >
                   We'll get back to you within 24 hours.
                 </p>
+
                 <button
                   onClick={() => setSent(false)}
-                  className="mt-6 text-[var(--orange)] font-semibold text-sm hover:underline"
+                  style={{
+                    marginTop: "28px",
+                    background: "none",
+                    border: "none",
+                    color: "#FF6B2C",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    fontSize: "14px",
+                  }}
                 >
                   Send another message
                 </button>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid sm:grid-cols-2 gap-5">
+              <form
+                onSubmit={handleSubmit}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "28px",
+                }}
+              >
+                {/* Name + Email */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns:
+                      "repeat(auto-fit, minmax(240px, 1fr))",
+                    gap: "20px",
+                  }}
+                >
+                  {/* Name */}
                   <div>
-                    <label className="block text-[13px] font-semibold text-[var(--black)] mb-2">
+                    <label
+                      style={{
+                        display: "block",
+                        marginBottom: "10px",
+                        fontWeight: 600,
+                        fontSize: "14px",
+                        color: "#0A0A0A",
+                      }}
+                    >
                       Your Name
                     </label>
+
                     <input
                       type="text"
                       value={form.name}
-                      onChange={(e) => { setForm({ ...form, name: e.target.value }); setErrors({ ...errors, name: "" }); }}
+                      onChange={(e) => {
+                        setForm({
+                          ...form,
+                          name: e.target.value,
+                        });
+
+                        setErrors({
+                          ...errors,
+                          name: "",
+                        });
+                      }}
                       placeholder="Alex Johnson"
-                      className={`w-full px-4 py-3 rounded-xl border-2 text-[15px] bg-[var(--mist)] focus:bg-white focus:outline-none transition-all ${errors.name ? "border-red-400 bg-red-50" : "border-transparent focus:border-[var(--orange)]"}`}
+                      style={{
+                        width: "100%",
+                        padding: "16px",
+                        borderRadius: "16px",
+                        border: errors.name
+                          ? "2px solid #EF4444"
+                          : "2px solid transparent",
+                        background: errors.name
+                          ? "#FEF2F2"
+                          : "#F7F5F3",
+                        fontSize: "15px",
+                        outline: "none",
+                        boxSizing: "border-box",
+                      }}
                     />
-                    {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+
+                    {errors.name && (
+                      <p
+                        style={{
+                          color: "#EF4444",
+                          fontSize: "12px",
+                          marginTop: "8px",
+                        }}
+                      >
+                        {errors.name}
+                      </p>
+                    )}
                   </div>
+
+                  {/* Email */}
                   <div>
-                    <label className="block text-[13px] font-semibold text-[var(--black)] mb-2">
+                    <label
+                      style={{
+                        display: "block",
+                        marginBottom: "10px",
+                        fontWeight: 600,
+                        fontSize: "14px",
+                        color: "#0A0A0A",
+                      }}
+                    >
                       Email Address
                     </label>
+
                     <input
                       type="email"
                       value={form.email}
-                      onChange={(e) => { setForm({ ...form, email: e.target.value }); setErrors({ ...errors, email: "" }); }}
+                      onChange={(e) => {
+                        setForm({
+                          ...form,
+                          email: e.target.value,
+                        });
+
+                        setErrors({
+                          ...errors,
+                          email: "",
+                        });
+                      }}
                       placeholder="alex@company.com"
-                      className={`w-full px-4 py-3 rounded-xl border-2 text-[15px] bg-[var(--mist)] focus:bg-white focus:outline-none transition-all ${errors.email ? "border-red-400 bg-red-50" : "border-transparent focus:border-[var(--orange)]"}`}
+                      style={{
+                        width: "100%",
+                        padding: "16px",
+                        borderRadius: "16px",
+                        border: errors.email
+                          ? "2px solid #EF4444"
+                          : "2px solid transparent",
+                        background: errors.email
+                          ? "#FEF2F2"
+                          : "#F7F5F3",
+                        fontSize: "15px",
+                        outline: "none",
+                        boxSizing: "border-box",
+                      }}
                     />
-                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+
+                    {errors.email && (
+                      <p
+                        style={{
+                          color: "#EF4444",
+                          fontSize: "12px",
+                          marginTop: "8px",
+                        }}
+                      >
+                        {errors.email}
+                      </p>
+                    )}
                   </div>
                 </div>
 
-                {/* Budget selector */}
+                {/* Budget */}
                 <div>
-                  <label className="block text-[13px] font-semibold text-[var(--black)] mb-2">
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "12px",
+                      fontWeight: 600,
+                      fontSize: "14px",
+                      color: "#0A0A0A",
+                    }}
+                  >
                     Project Budget
                   </label>
-                  <div className="flex flex-wrap gap-2">
+
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "10px",
+                    }}
+                  >
                     {budgets.map((b) => (
                       <button
                         key={b}
                         type="button"
-                        onClick={() => setForm({ ...form, budget: b })}
-                        className={`px-4 py-2 rounded-xl text-[13px] font-medium border-2 transition-all ${
-                          form.budget === b
-                            ? "border-[var(--orange)] bg-[var(--orange)] text-white"
-                            : "border-[var(--border)] bg-[var(--mist)] text-[var(--text-body)] hover:border-[var(--orange)] hover:text-[var(--orange)]"
-                        }`}
+                        onClick={() =>
+                          setForm({
+                            ...form,
+                            budget: b,
+                          })
+                        }
+                        style={{
+                          padding: "12px 18px",
+                          borderRadius: "14px",
+                          border:
+                            form.budget === b
+                              ? "2px solid #FF6B2C"
+                              : "2px solid #EAE6E1",
+                          background:
+                            form.budget === b
+                              ? "#FF6B2C"
+                              : "#F7F5F3",
+                          color:
+                            form.budget === b
+                              ? "#FFFFFF"
+                              : "#4A4540",
+                          fontWeight: 500,
+                          fontSize: "13px",
+                          cursor: "pointer",
+                          transition:
+                            "all 0.3s ease",
+                        }}
                       >
                         {b}
                       </button>
@@ -201,34 +634,109 @@ export default function ContactSection() {
                   </div>
                 </div>
 
+                {/* Message */}
                 <div>
-                  <label className="block text-[13px] font-semibold text-[var(--black)] mb-2">
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "10px",
+                      fontWeight: 600,
+                      fontSize: "14px",
+                      color: "#0A0A0A",
+                    }}
+                  >
                     Project Details
                   </label>
+
                   <textarea
+                    rows={6}
                     value={form.message}
-                    onChange={(e) => { setForm({ ...form, message: e.target.value }); setErrors({ ...errors, message: "" }); }}
-                    rows={5}
+                    onChange={(e) => {
+                      setForm({
+                        ...form,
+                        message: e.target.value,
+                      });
+
+                      setErrors({
+                        ...errors,
+                        message: "",
+                      });
+                    }}
                     placeholder="Tell us about your project, timeline, and goals..."
-                    className={`w-full px-4 py-3 rounded-xl border-2 text-[15px] resize-none bg-[var(--mist)] focus:bg-white focus:outline-none transition-all ${errors.message ? "border-red-400 bg-red-50" : "border-transparent focus:border-[var(--orange)]"}`}
+                    style={{
+                      width: "100%",
+                      padding: "18px",
+                      borderRadius: "18px",
+                      border: errors.message
+                        ? "2px solid #EF4444"
+                        : "2px solid transparent",
+                      background: errors.message
+                        ? "#FEF2F2"
+                        : "#F7F5F3",
+                      fontSize: "15px",
+                      resize: "none",
+                      outline: "none",
+                      lineHeight: 1.7,
+                      boxSizing: "border-box",
+                    }}
                   />
-                  {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
+
+                  {errors.message && (
+                    <p
+                      style={{
+                        color: "#EF4444",
+                        fontSize: "12px",
+                        marginTop: "8px",
+                      }}
+                    >
+                      {errors.message}
+                    </p>
+                  )}
                 </div>
 
+                {/* Submit */}
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full flex items-center justify-center gap-3 bg-[var(--orange)] hover:bg-[var(--orange-dark)] text-white py-4 rounded-2xl font-semibold text-[15px] transition-all duration-300 hover:shadow-lg hover:shadow-orange-200 disabled:opacity-70 group"
+                  style={{
+                    width: "100%",
+                    background: "#FF6B2C",
+                    color: "#FFFFFF",
+                    border: "none",
+                    borderRadius: "18px",
+                    padding: "18px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "10px",
+                    fontSize: "15px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    opacity: sending ? 0.7 : 1,
+                  }}
                 >
                   {sending ? (
-                    <span className="flex items-center gap-2">
-                      <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                    <>
+                      <span
+                        style={{
+                          width: "16px",
+                          height: "16px",
+                          border:
+                            "2px solid rgba(255,255,255,0.4)",
+                          borderTop:
+                            "2px solid #FFFFFF",
+                          borderRadius: "50%",
+                          animation:
+                            "spin 0.8s linear infinite",
+                        }}
+                      />
                       Sending...
-                    </span>
+                    </>
                   ) : (
                     <>
                       Send Message
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight size={18} />
                     </>
                   )}
                 </button>

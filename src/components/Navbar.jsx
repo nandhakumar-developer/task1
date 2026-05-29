@@ -66,7 +66,7 @@ export default function Navbar() {
           >
             <a
               href="#contact"
-              className="flex items-center gap-2 bg-[var(--orange)] hover:bg-[var(--orange-dark)] text-white px-5 py-2.5 rounded-xl font-semibold text-[14px] transition-all duration-300 hover:shadow-lg hover:shadow-orange-200 group"
+              className="flex items-center gap-2 bg-[var(--orange)] hover:bg-[var(--orange-dark)] text-white px-5 py-2.5 rounded-xl font-semibold text-[14px] transition-all duration-300 hover:shadow-lg hover:shadow-orange-200 group h-10 w-33 justify-center"
             >
               Start Project
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
