@@ -1,15 +1,71 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 import { fadeUp, stagger } from "../utils/animations";
+
+// Counter animation component
+function AnimatedCounter({ value, isInView }) {
+  const numericValue = parseInt(value.replace(/[^0-9]/g, ""));
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    const duration = 2000;
+    const steps = 60;
+    const increment = numericValue / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= numericValue) {
+        setCount(numericValue);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, duration / steps);
+
+    return () => clearInterval(timer);
+  }, [isInView, numericValue]);
+
+  return (
+    <span>
+      {count}
+      {value.includes("%") && (
+        <span style={{ color: "#FF6B2C" }}>%</span>
+      )}
+      {value.includes("+") && (
+        <span style={{ color: "#FF6B2C" }}>+</span>
+      )}
+      {value.includes("yr") && (
+        <span style={{ color: "#FF6B2C" }}>yr</span>
+      )}
+    </span>
+  );
+}
 
 export default function HeroSection() {
   const tags = ["UI/UX Design", "Web Development", "Branding", "Strategy"];
+  const statsRef = useRef(null);
+  const isStatsInView = useInView(statsRef, { once: true });
 
   const stats = [
-    { n: "50+",  l: "Projects Delivered", note: "Since 2019"    },
-    { n: "20+",  l: "Happy Clients",       note: "Global brands" },
-    { n: "5yr",  l: "In Business",         note: "& counting"   },
-    { n: "100%", l: "Satisfaction",        note: "Guaranteed"   },
+    { n: "50+", l: "Projects Delivered", note: "Since 2019" },
+    { n: "20+", l: "Happy Clients", note: "Global brands" },
+    { n: "5yr", l: "In Business", note: "& counting" },
+    { n: "100%", l: "Satisfaction", note: "Guaranteed" },
+  ];
+
+  // Marquee items - doubled for seamless loop
+  const marqueeItems = [
+    "Web Development",
+    "Branding",
+    "Digital Marketing",
+    "UI/UX Design",
+    "Web Development",
+    "Branding",
+    "Digital Marketing",
+    "UI/UX Design",
   ];
 
   return (
@@ -21,8 +77,8 @@ export default function HeroSection() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        paddingTop: "120px",
-        paddingBottom: "80px",
+        paddingTop: "clamp(80px, 10vw, 120px)",
+        paddingBottom: "clamp(60px, 8vw, 80px)",
         backgroundImage:
           "linear-gradient(rgba(234,230,225,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(234,230,225,0.5) 1px, transparent 1px)",
         backgroundSize: "48px 48px",
@@ -33,10 +89,10 @@ export default function HeroSection() {
       <div
         style={{
           position: "absolute",
-          top: "80px",
+          top: "clamp(40px, 8vw, 80px)",
           right: 0,
-          width: "min(520px, 70vw)",
-          height: "min(520px, 70vw)",
+          width: "clamp(280px, 50vw, 520px)",
+          height: "clamp(280px, 50vw, 520px)",
           borderRadius: "50%",
           background: "#FFF0E8",
           filter: "blur(80px)",
@@ -49,8 +105,8 @@ export default function HeroSection() {
           position: "absolute",
           bottom: 0,
           left: 0,
-          width: "min(380px, 60vw)",
-          height: "min(380px, 60vw)",
+          width: "clamp(200px, 40vw, 380px)",
+          height: "clamp(200px, 40vw, 380px)",
           borderRadius: "50%",
           background: "#FFF0E8",
           filter: "blur(100px)",
@@ -59,9 +115,9 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Decorative orbs — lg+ only */}
+      {/* Decorative orbs — visible on larger screens */}
       <div
-        className="float-anim"
+        className="float-anim hidden lg:block"
         style={{
           position: "absolute",
           top: "128px",
@@ -72,30 +128,37 @@ export default function HeroSection() {
           border: "1px solid #EAE6E1",
           opacity: 0.3,
           pointerEvents: "none",
-          display: "var(--orb-display, none)",
         }}
       />
 
-      {/* Spinning badge */}
+      {/* Spinning badge — visible on xl screens */}
       <div
-        className="spin-slow"
+        className="spin-slow hidden xl:flex"
         style={{
           position: "absolute",
           top: "128px",
           right: "6%",
           width: "112px",
           height: "112px",
-          display: "none",
           alignItems: "center",
           justifyContent: "center",
         }}
-        // shown via media query in index.css — xl:flex
       >
-        <svg viewBox="0 0 120 120" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+        <svg
+          viewBox="0 0 120 120"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+        >
           <defs>
-            <path id="badge-circle" d="M 60,60 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" />
+            <path
+              id="badge-circle"
+              d="M 60,60 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
+            />
           </defs>
-          <text fontSize="11.5" fontFamily="'Space Mono', monospace" fill="#FF6B2C">
+          <text
+            fontSize="11.5"
+            fontFamily="'Space Mono', monospace"
+            fill="#FF6B2C"
+          >
             <textPath href="#badge-circle" letterSpacing="2">
               CREATIVE AGENCY • NEXORA STUDIO •&nbsp;
             </textPath>
@@ -116,24 +179,32 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ── Main content container ── */}
+      {/* Main content container */}
       <div
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 24px",
+          padding: "0 clamp(16px, 4vw, 24px)",
           width: "100%",
           position: "relative",
           zIndex: 10,
           boxSizing: "border-box",
         }}
       >
-        <motion.div variants={stagger} initial="hidden" animate="visible">
-
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
+        >
           {/* Tag pills */}
           <motion.div
             variants={fadeUp}
-            style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "40px" }}
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "8px",
+              marginBottom: "clamp(24px, 4vw, 40px)",
+            }}
           >
             {tags.map((tag) => (
               <span
@@ -147,7 +218,7 @@ export default function HeroSection() {
                   background: "#FFFFFF",
                   border: "1px solid #EAE6E1",
                   color: "#4A4540",
-                  fontSize: "13px",
+                  fontSize: "clamp(11px, 1.5vw, 13px)",
                   fontWeight: 500,
                   boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
                   whiteSpace: "nowrap",
@@ -172,20 +243,23 @@ export default function HeroSection() {
             variants={fadeUp}
             style={{
               fontFamily: "'DM Serif Display', Georgia, serif",
-              fontSize: "clamp(2.8rem, 8vw, 7.5rem)",
+              fontSize: "clamp(2.5rem, 7vw, 7.5rem)",
               lineHeight: 1.0,
               letterSpacing: "-0.02em",
               color: "#0A0A0A",
-              marginBottom: "32px",
-              // NO ml-80 / margin-left here
+              marginBottom: "clamp(20px, 3vw, 32px)",
             }}
           >
             We craft
             <span style={{ display: "block" }}>
               digital{" "}
-              <em style={{ color: "#FF6B2C", fontStyle: "normal" }}>experiences</em>
+              <em style={{ color: "#FF6B2C", fontStyle: "normal" }}>
+                experiences
+              </em>
             </span>
-            <span style={{ display: "block", color: "#8A8480" }}>that matter.</span>
+            <span style={{ display: "block", color: "#8A8480" }}>
+              that matter.
+            </span>
           </motion.h1>
 
           {/* Sub-copy + CTA row */}
@@ -196,13 +270,13 @@ export default function HeroSection() {
               flexDirection: "row",
               flexWrap: "wrap",
               alignItems: "flex-end",
-              gap: "32px",
-              marginTop: "40px",
+              gap: "clamp(16px, 3vw, 32px)",
+              marginTop: "clamp(24px, 4vw, 40px)",
             }}
           >
             <p
               style={{
-                fontSize: "clamp(1rem, 2vw, 1.25rem)",
+                fontSize: "clamp(0.95rem, 2vw, 1.25rem)",
                 color: "#4A4540",
                 lineHeight: 1.7,
                 maxWidth: "420px",
@@ -215,7 +289,14 @@ export default function HeroSection() {
             </p>
 
             {/* Buttons */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", flexShrink: 0 }}>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "12px",
+                flexShrink: 0,
+              }}
+            >
               <a
                 href="#portfolio"
                 style={{
@@ -224,10 +305,10 @@ export default function HeroSection() {
                   gap: "10px",
                   background: "#FF6B2C",
                   color: "#FFFFFF",
-                  padding: "14px 28px",
+                  padding: "clamp(12px, 2vw, 14px) clamp(20px, 3vw, 28px)",
                   borderRadius: "16px",
                   fontWeight: 600,
-                  fontSize: "15px",
+                  fontSize: "clamp(13px, 1.5vw, 15px)",
                   textDecoration: "none",
                   whiteSpace: "nowrap",
                   transition: "all 0.3s ease",
@@ -236,7 +317,8 @@ export default function HeroSection() {
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = "#E5520E";
                   e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = "0 12px 32px rgba(255,107,44,0.3)";
+                  e.currentTarget.style.boxShadow =
+                    "0 12px 32px rgba(255,107,44,0.3)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = "#FF6B2C";
@@ -256,22 +338,24 @@ export default function HeroSection() {
                   gap: "10px",
                   background: "#FFFFFF",
                   color: "#0A0A0A",
-                  border: "2px solid #EAE6E1",
-                  padding: "14px 28px",
+                  border: "2px solid #FF6B2C",
+                  padding: "clamp(12px, 2vw, 14px) clamp(20px, 3vw, 28px)",
                   borderRadius: "16px",
                   fontWeight: 600,
-                  fontSize: "15px",
+                  fontSize: "clamp(13px, 1.5vw, 15px)",
                   textDecoration: "none",
                   whiteSpace: "nowrap",
                   transition: "all 0.3s ease",
                   fontFamily: "'DM Sans', system-ui, sans-serif",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "#FF6B2C";
-                  e.currentTarget.style.color = "#FF6B2C";
+                  e.currentTarget.style.background = "#FFF0E8";
+                  e.currentTarget.style.borderColor = "#E5520E";
+                  e.currentTarget.style.color = "#E5520E";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "#EAE6E1";
+                  e.currentTarget.style.background = "#FFFFFF";
+                  e.currentTarget.style.borderColor = "#FF6B2C";
                   e.currentTarget.style.color = "#0A0A0A";
                 }}
               >
@@ -282,19 +366,19 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Stats bar */}
+        {/* Stats bar with counter animation */}
         <motion.div
+          ref={statsRef}
           variants={stagger}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          animate={isStatsInView ? "visible" : "hidden"}
           style={{
-            marginTop: "72px",
-            paddingTop: "40px",
+            marginTop: "clamp(48px, 8vw, 72px)",
+            paddingTop: "clamp(24px, 4vw, 40px)",
             borderTop: "1px solid #EAE6E1",
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-            gap: "32px",
+            gap: "clamp(16px, 3vw, 32px)",
           }}
         >
           {stats.map((s, i) => (
@@ -302,20 +386,23 @@ export default function HeroSection() {
               <div
                 style={{
                   fontFamily: "'DM Serif Display', Georgia, serif",
-                  fontSize: "clamp(2rem, 4vw, 3rem)",
+                  fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
                   fontWeight: 700,
                   color: "#0A0A0A",
                   lineHeight: 1,
                   marginBottom: "6px",
                 }}
               >
-                {s.n}
+                <AnimatedCounter
+                  value={s.n}
+                  isInView={isStatsInView}
+                />
               </div>
               <div
                 style={{
                   color: "#4A4540",
                   fontWeight: 500,
-                  fontSize: "15px",
+                  fontSize: "clamp(13px, 1.5vw, 15px)",
                   fontFamily: "'DM Sans', system-ui, sans-serif",
                 }}
               >
@@ -324,7 +411,7 @@ export default function HeroSection() {
               <div
                 style={{
                   color: "#8A8480",
-                  fontSize: "12px",
+                  fontSize: "clamp(11px, 1.2vw, 12px)",
                   marginTop: "4px",
                   fontFamily: "'Space Mono', monospace",
                 }}
@@ -336,44 +423,119 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Bottom marquee — fixed 44px tall, never overlaps content */}
+      {/* Bottom marquee - Fixed infinite loop */}
       <div
         style={{
           position: "absolute",
           bottom: 0,
           left: 0,
           right: 0,
-          height: "44px",
-          borderTop: "1px solid #EAE6E1",
-          background: "#F7F5F3",
+          height: "clamp(36px, 5vw, 44px)",
+          background: "#FF6B2C",
           overflow: "hidden",
           display: "flex",
           alignItems: "center",
         }}
       >
-        <div className="marquee-track" style={{ display: "flex", whiteSpace: "nowrap" }}>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <span
-              key={i}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "24px",
-                paddingRight: "48px",
-                color: "#8A8480",
-                fontSize: "13px",
-                fontFamily: "'Space Mono', monospace",
-              }}
-            >
-              UI/UX Design{" "}
-              <span style={{ color: "#FF6B2C" }}>✦</span> Web Development{" "}
-              <span style={{ color: "#FF6B2C" }}>✦</span> Branding{" "}
-              <span style={{ color: "#FF6B2C" }}>✦</span> Digital Marketing{" "}
-              <span style={{ color: "#FF6B2C" }}>✦</span>
+        <style>{`
+          @keyframes marquee {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          
+          .marquee-container {
+            display: flex;
+            animation: marquee 20s linear infinite;
+            width: fit-content;
+          }
+          
+          .marquee-item {
+            display: inline-flex;
+            align-items: center;
+            gap: clamp(16px, 2vw, 24px);
+            padding-right: clamp(32px, 4vw, 48px);
+            color: #FFFFFF;
+            font-size: clamp(11px, 1.3vw, 13px);
+            font-family: 'Space Mono', monospace;
+            white-space: nowrap;
+            flex-shrink: 0;
+          }
+          
+          .marquee-separator {
+            color: #FFFFFF;
+            font-size: clamp(11px, 1.3vw, 13px);
+          }
+        `}</style>
+        
+        <div className="marquee-container">
+          {marqueeItems.map((item, index) => (
+            <span key={index} className="marquee-item">
+              {item}
+              <span className="marquee-separator">✦</span>
+            </span>
+          ))}
+        </div>
+        {/* Duplicate for seamless loop */}
+        <div className="marquee-container" aria-hidden="true">
+          {marqueeItems.map((item, index) => (
+            <span key={`dup-${index}`} className="marquee-item">
+              {item}
+              <span className="marquee-separator">✦</span>
             </span>
           ))}
         </div>
       </div>
+
+      {/* Additional global styles */}
+      <style>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+        
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+        
+        .float-anim {
+          animation: float 6s ease-in-out infinite;
+        }
+        
+        .spin-slow {
+          animation: spin 20s linear infinite;
+        }
+        
+        @media (max-width: 1023px) {
+          .hidden {
+            display: none !important;
+          }
+        }
+        
+        @media (min-width: 1024px) {
+          .lg\\:block {
+            display: block !important;
+          }
+        }
+        
+        @media (min-width: 1280px) {
+          .xl\\:flex {
+            display: flex !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
