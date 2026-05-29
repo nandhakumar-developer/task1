@@ -3,7 +3,7 @@ import HeroSection from "./sections/HeroSection";
 import ServicesSection from "./sections/ServicesSection";
 import PortfolioSection from "./sections/PortfolioSection";
 import AboutSection from "./sections/AboutSection";
-import ProcessSection from "./sections/ProcesSection";
+import ProcessSection from "./sections/ProcessSection";
 import TestimonialsSection from "./sections/TestimonialsSection";
 import ContactSection from "./sections/ContactSection";
 import Footer from "./sections/Footer";
