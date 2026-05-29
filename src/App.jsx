@@ -3,27 +3,24 @@ import HeroSection from "./sections/HeroSection";
 import ServicesSection from "./sections/ServicesSection";
 import PortfolioSection from "./sections/PortfolioSection";
 import AboutSection from "./sections/AboutSection";
+import ProcessSection from "./sections/ProcessSection";
 import TestimonialsSection from "./sections/TestimonialsSection";
 import ContactSection from "./sections/ContactSection";
 import Footer from "./sections/Footer";
 
 export default function App() {
   return (
-    <div className="bg-white">
-      {/* Smooth scrolling */}
-      <style>{`
-        html {
-          scroll-behavior: smooth;
-        }
-      `}</style>
-      
+    <div style={{ backgroundColor: "var(--white)" }}>
       <Navbar />
-      <HeroSection />
-      <ServicesSection />
-      <PortfolioSection />
-      <AboutSection />
-      <TestimonialsSection />
-      <ContactSection />
+      <main>
+        <HeroSection />
+        <ServicesSection />
+        <PortfolioSection />
+        <AboutSection />
+        <ProcessSection />
+        <TestimonialsSection />
+        <ContactSection />
+      </main>
       <Footer />
     </div>
   );
