@@ -60,6 +60,16 @@ const projects = [
 
 export default function PortfolioSection() {
   const [active, setActive] = useState("All");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useState(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const filtered =
     active === "All"
@@ -70,7 +80,7 @@ export default function PortfolioSection() {
     <section
       id="portfolio"
       style={{
-        padding: "120px 24px",
+        padding: "clamp(60px, 8vw, 120px) clamp(16px, 4vw, 24px)",
         background: "#F7F5F3",
         position: "relative",
         overflow: "hidden",
@@ -82,12 +92,11 @@ export default function PortfolioSection() {
           position: "absolute",
           top: 0,
           right: 0,
-          width: "420px",
-          height: "420px",
+          width: "clamp(250px, 40vw, 420px)",
+          height: "clamp(250px, 40vw, 420px)",
           borderRadius: "50%",
-          background: "#FFF0E8",
-          filter: "blur(120px)",
-          opacity: 0.7,
+          background: "radial-gradient(circle, rgba(255,107,44,0.08) 0%, transparent 70%)",
+          filter: "blur(100px)",
           pointerEvents: "none",
         }}
       />
@@ -105,40 +114,56 @@ export default function PortfolioSection() {
           variants={stagger}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
           style={{
-            marginBottom: "56px",
+            marginBottom: "clamp(40px, 6vw, 56px)",
           }}
         >
           <motion.span
             variants={fadeUp}
             style={{
-              display: "inline-block",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "12px",
               color: "#FF6B2C",
               fontFamily: "'Space Mono', monospace",
-              fontSize: "13px",
+              fontSize: "clamp(11px, 1.5vw, 13px)",
               letterSpacing: "2px",
               textTransform: "uppercase",
-              marginBottom: "16px",
+              marginBottom: "clamp(12px, 2vw, 16px)",
+              background: "linear-gradient(135deg, rgba(255,107,44,0.1) 0%, rgba(255,107,44,0.05) 100%)",
+              padding: "8px 16px",
+              borderRadius: "999px",
+              border: "1px solid rgba(255,107,44,0.2)",
             }}
           >
-            — Our Work
+            <span
+              style={{
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                background: "#FF6B2C",
+                animation: "pulse 2s ease-in-out infinite",
+              }}
+            />
+            Our Work
           </motion.span>
 
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "flex-end",
+              alignItems: isMobile ? "flex-start" : "flex-end",
               flexWrap: "wrap",
-              gap: "24px",
+              gap: "clamp(16px, 3vw, 24px)",
+              flexDirection: isMobile ? "column" : "row",
             }}
           >
             <motion.h2
               variants={fadeUp}
               style={{
                 fontFamily: "'DM Serif Display', Georgia, serif",
-                fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+                fontSize: "clamp(2.2rem, 5vw, 4.5rem)",
                 lineHeight: 1,
                 color: "#0A0A0A",
                 margin: 0,
@@ -154,8 +179,9 @@ export default function PortfolioSection() {
               variants={fadeUp}
               style={{
                 display: "flex",
-                gap: "10px",
+                gap: "clamp(6px, 1vw, 10px)",
                 flexWrap: "wrap",
+                width: isMobile ? "100%" : "auto",
               }}
             >
               {categories.map((cat) => (
@@ -163,24 +189,42 @@ export default function PortfolioSection() {
                   key={cat}
                   onClick={() => setActive(cat)}
                   style={{
-                    padding: "12px 20px",
-                    borderRadius: "14px",
+                    padding: "clamp(10px, 1.5vw, 12px) clamp(16px, 2vw, 20px)",
+                    borderRadius: "clamp(10px, 1.5vw, 14px)",
                     border:
                       active === cat
-                        ? "1px solid #FF6B2C"
-                        : "1px solid #EAE6E1",
+                        ? "2px solid #FF6B2C"
+                        : "2px solid #EAE6E1",
                     background:
                       active === cat ? "#FF6B2C" : "#FFFFFF",
                     color:
                       active === cat ? "#FFFFFF" : "#4A4540",
-                    fontSize: "14px",
+                    fontSize: "clamp(12px, 1.5vw, 14px)",
                     fontWeight: 600,
                     cursor: "pointer",
-                    transition: "all 0.3s ease",
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                     boxShadow:
                       active === cat
-                        ? "0 10px 25px rgba(255,107,44,0.25)"
-                        : "none",
+                        ? "0 8px 20px rgba(255,107,44,0.2)"
+                        : "0 2px 8px rgba(0,0,0,0.04)",
+                    flex: isMobile ? 1 : "none",
+                    whiteSpace: "nowrap",
+                    fontFamily: "'DM Sans', sans-serif",
+                    transform: active === cat ? "scale(1.05)" : "scale(1)",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (active !== cat) {
+                      e.currentTarget.style.borderColor = "#FF6B2C";
+                      e.currentTarget.style.color = "#FF6B2C";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (active !== cat) {
+                      e.currentTarget.style.borderColor = "#EAE6E1";
+                      e.currentTarget.style.color = "#4A4540";
+                      e.currentTarget.style.transform = "translateY(0)";
+                    }
                   }}
                 >
                   {cat}
@@ -191,47 +235,51 @@ export default function PortfolioSection() {
         </motion.div>
 
         {/* Projects Grid */}
-        <motion.div
-          layout
+        <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: "20px",
+            gridTemplateColumns: `repeat(auto-fit, minmax(min(${isMobile ? "100%" : "320px"}, 100%), 1fr))`,
+            gap: "clamp(16px, 2vw, 20px)",
           }}
         >
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="wait">
             {filtered.map((project, i) => (
               <motion.div
                 key={project.title}
                 layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
                 transition={{
-                  duration: 0.4,
-                  delay: i * 0.05,
+                  duration: 0.5,
+                  delay: i * 0.08,
+                  ease: [0.25, 0.46, 0.45, 0.94],
                 }}
-                whileHover={{ y: -6 }}
+                whileHover={{ y: -8 }}
                 style={{
                   position: "relative",
                   overflow: "hidden",
-                  borderRadius: "30px",
-                  minHeight: project.large ? "420px" : "340px",
+                  borderRadius: "clamp(24px, 3vw, 30px)",
+                  minHeight: project.large && !isMobile ? "420px" : "340px",
                   cursor: "pointer",
-                  gridColumn: project.large ? "span 2" : "span 1",
+                  gridColumn: project.large && !isMobile ? "span 2" : "span 1",
+                  border: "1px solid rgba(0,0,0,0.08)",
                 }}
               >
                 {/* Image */}
                 <img
                   src={project.img}
                   alt={project.title}
+                  loading="lazy"
                   style={{
                     position: "absolute",
                     inset: 0,
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
+                    transition: "transform 0.6s ease",
                   }}
+                  className="project-image"
                 />
 
                 {/* Overlay */}
@@ -240,8 +288,10 @@ export default function PortfolioSection() {
                     position: "absolute",
                     inset: 0,
                     background:
-                      "linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.15), transparent)",
+                      "linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.05) 100%)",
+                    transition: "opacity 0.3s ease",
                   }}
+                  className="project-overlay"
                 />
 
                 {/* Content */}
@@ -249,7 +299,7 @@ export default function PortfolioSection() {
                   style={{
                     position: "absolute",
                     inset: 0,
-                    padding: "28px",
+                    padding: "clamp(20px, 3vw, 28px)",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
@@ -266,14 +316,15 @@ export default function PortfolioSection() {
                   >
                     <span
                       style={{
-                        padding: "8px 14px",
+                        padding: "clamp(6px, 1vw, 8px) clamp(10px, 1.5vw, 14px)",
                         borderRadius: "999px",
-                        background: "rgba(255,255,255,0.12)",
+                        background: "rgba(255,255,255,0.15)",
                         backdropFilter: "blur(10px)",
-                        border: "1px solid rgba(255,255,255,0.15)",
+                        border: "1px solid rgba(255,255,255,0.2)",
                         color: "#FFFFFF",
-                        fontSize: "12px",
+                        fontSize: "clamp(10px, 1.2vw, 12px)",
                         fontWeight: 500,
+                        fontFamily: "'DM Sans', sans-serif",
                       }}
                     >
                       {project.category}
@@ -281,8 +332,8 @@ export default function PortfolioSection() {
 
                     <span
                       style={{
-                        color: "rgba(255,255,255,0.7)",
-                        fontSize: "12px",
+                        color: "rgba(255,255,255,0.8)",
+                        fontSize: "clamp(11px, 1.2vw, 12px)",
                         fontFamily: "'Space Mono', monospace",
                       }}
                     >
@@ -297,20 +348,21 @@ export default function PortfolioSection() {
                       style={{
                         display: "flex",
                         flexWrap: "wrap",
-                        gap: "8px",
-                        marginBottom: "14px",
+                        gap: "clamp(6px, 1vw, 8px)",
+                        marginBottom: "clamp(10px, 1.5vw, 14px)",
                       }}
                     >
                       {project.tags.map((tag) => (
                         <span
                           key={tag}
                           style={{
-                            padding: "6px 12px",
+                            padding: "clamp(4px, 0.8vw, 6px) clamp(8px, 1.2vw, 12px)",
                             borderRadius: "999px",
                             background: "rgba(255,107,44,0.9)",
                             color: "#FFFFFF",
-                            fontSize: "11px",
+                            fontSize: "clamp(10px, 1vw, 11px)",
                             fontWeight: 600,
+                            fontFamily: "'DM Sans', sans-serif",
                           }}
                         >
                           {tag}
@@ -322,8 +374,8 @@ export default function PortfolioSection() {
                     <h3
                       style={{
                         color: "#FFFFFF",
-                        fontSize: "30px",
-                        margin: "0 0 10px",
+                        fontSize: "clamp(22px, 3vw, 30px)",
+                        margin: "0 0 8px",
                         fontFamily:
                           "'DM Serif Display', Georgia, serif",
                         lineHeight: 1.1,
@@ -335,11 +387,12 @@ export default function PortfolioSection() {
                     {/* Description */}
                     <p
                       style={{
-                        color: "rgba(255,255,255,0.72)",
-                        fontSize: "14px",
+                        color: "rgba(255,255,255,0.75)",
+                        fontSize: "clamp(12px, 1.3vw, 14px)",
                         lineHeight: 1.7,
-                        marginBottom: "18px",
+                        marginBottom: "clamp(14px, 2vw, 18px)",
                         maxWidth: "420px",
+                        fontWeight: 300,
                       }}
                     >
                       {project.description}
@@ -352,11 +405,14 @@ export default function PortfolioSection() {
                         alignItems: "center",
                         gap: "8px",
                         color: "#FFB089",
-                        fontSize: "14px",
+                        fontSize: "clamp(12px, 1.3vw, 14px)",
                         fontWeight: 600,
+                        fontFamily: "'DM Sans', sans-serif",
+                        transition: "all 0.3s ease",
                       }}
+                      className="case-study-link"
                     >
-                      <ExternalLink size={15} />
+                      <ExternalLink size={14} />
                       View Case Study
                     </div>
                   </div>
@@ -364,7 +420,7 @@ export default function PortfolioSection() {
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {/* CTA */}
         <motion.div
@@ -374,7 +430,7 @@ export default function PortfolioSection() {
           transition={{ delay: 0.2 }}
           style={{
             textAlign: "center",
-            marginTop: "64px",
+            marginTop: "clamp(40px, 6vw, 64px)",
           }}
         >
           <a
@@ -383,23 +439,28 @@ export default function PortfolioSection() {
               display: "inline-flex",
               alignItems: "center",
               gap: "12px",
-              padding: "16px 30px",
-              borderRadius: "18px",
+              padding: "clamp(14px, 2vw, 16px) clamp(24px, 3vw, 30px)",
+              borderRadius: "clamp(14px, 2vw, 18px)",
               border: "2px solid #EAE6E1",
               color: "#0A0A0A",
               textDecoration: "none",
               fontWeight: 600,
-              fontSize: "15px",
+              fontSize: "clamp(14px, 1.5vw, 15px)",
               transition: "all 0.3s ease",
               background: "#FFFFFF",
+              fontFamily: "'DM Sans', sans-serif",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.borderColor = "#FF6B2C";
               e.currentTarget.style.color = "#FF6B2C";
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow = "0 8px 24px rgba(255,107,44,0.15)";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.borderColor = "#EAE6E1";
               e.currentTarget.style.color = "#0A0A0A";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "none";
             }}
           >
             Start Your Project
@@ -407,6 +468,38 @@ export default function PortfolioSection() {
           </a>
         </motion.div>
       </div>
+
+      <style>{`
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(1.5);
+          }
+        }
+        
+        .project-image {
+          transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-overlay {
+          transition: background 0.4s ease;
+        }
+        
+        .case-study-link:hover {
+          color: #FF6B2C !important;
+          gap: 12px !important;
+        }
+        
+        @media (hover: hover) {
+          .project-image:hover {
+            transform: scale(1.05);
+          }
+        }
+      `}</style>
     </section>
   );
 }

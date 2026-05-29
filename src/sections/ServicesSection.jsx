@@ -220,7 +220,7 @@ export default function ServicesSection() {
                 overflow: "hidden",
                 borderRadius: "clamp(24px, 3vw, 32px)",
                 background: svc.bg,
-                border: `2px solid rgba(255,107,44,0.15)`,
+                border: "3px solid #FF6B2C", // Changed to 3px solid orange border
                 transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
                 cursor: "pointer",
                 boxShadow: "0 4px 24px rgba(255,107,44,0.06)",
@@ -454,8 +454,9 @@ export default function ServicesSection() {
       {/* CSS Styles */}
       <style>{`
         .service-card:hover {
-          border-color: rgba(255,107,44,0.4) !important;
-          box-shadow: 0 12px 40px rgba(255,107,44,0.15), 0 0 0 1px rgba(255,107,44,0.1) !important;
+          border-color: #FF6B2C !important;
+          box-shadow: 0 12px 40px rgba(255,107,44,0.2), 0 0 0 1px rgba(255,107,44,0.1) !important;
+          transform: translateY(-8px) scale(1.02) !important;
         }
         
         .service-card:hover .card-border-gradient {

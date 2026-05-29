@@ -80,7 +80,7 @@ export default function ContactSection() {
     <section
       id="contact"
       style={{
-        padding: "120px 24px",
+        padding: "clamp(60px, 8vw, 120px) clamp(16px, 4vw, 24px)",
         background: "#F7F5F3",
         position: "relative",
         overflow: "hidden",
@@ -92,12 +92,11 @@ export default function ContactSection() {
           position: "absolute",
           top: "-120px",
           left: "-120px",
-          width: "420px",
-          height: "420px",
+          width: "clamp(300px, 45vw, 420px)",
+          height: "clamp(300px, 45vw, 420px)",
           borderRadius: "50%",
-          background: "#FFF0E8",
+          background: "radial-gradient(circle, rgba(255,107,44,0.08) 0%, transparent 70%)",
           filter: "blur(120px)",
-          opacity: 0.8,
           pointerEvents: "none",
         }}
       />
@@ -118,22 +117,37 @@ export default function ContactSection() {
           viewport={{ once: true }}
           style={{
             textAlign: "center",
-            marginBottom: "72px",
+            marginBottom: "clamp(48px, 8vw, 72px)",
           }}
         >
           <motion.span
             variants={fadeUp}
             style={{
-              display: "inline-block",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "12px",
               color: "#FF6B2C",
               fontFamily: "'Space Mono', monospace",
-              fontSize: "13px",
+              fontSize: "clamp(11px, 1.5vw, 13px)",
               letterSpacing: "2px",
               textTransform: "uppercase",
-              marginBottom: "18px",
+              marginBottom: "clamp(14px, 2vw, 18px)",
+              background: "linear-gradient(135deg, rgba(255,107,44,0.1) 0%, rgba(255,107,44,0.05) 100%)",
+              padding: "8px 16px",
+              borderRadius: "999px",
+              border: "1px solid rgba(255,107,44,0.2)",
             }}
           >
-            — Get In Touch
+            <span
+              style={{
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                background: "#FF6B2C",
+                animation: "pulse 2s ease-in-out infinite",
+              }}
+            />
+            Get In Touch
           </motion.span>
 
           <motion.h2
@@ -141,7 +155,7 @@ export default function ContactSection() {
             style={{
               fontFamily:
                 "'DM Serif Display', Georgia, serif",
-              fontSize: "clamp(2.6rem, 5vw, 4.8rem)",
+              fontSize: "clamp(2.2rem, 5vw, 4.8rem)",
               lineHeight: 1,
               color: "#0A0A0A",
               margin: 0,
@@ -149,8 +163,19 @@ export default function ContactSection() {
           >
             Ready to build
             <br />
-            <span style={{ color: "#FF6B2C" }}>
+            <span style={{ color: "#FF6B2C", position: "relative" }}>
               something great?
+              <span
+                style={{
+                  position: "absolute",
+                  bottom: "-4px",
+                  left: 0,
+                  width: "100%",
+                  height: "3px",
+                  background: "linear-gradient(90deg, #FF6B2C, transparent)",
+                  borderRadius: "2px",
+                }}
+              />
             </span>
           </motion.h2>
 
@@ -158,11 +183,11 @@ export default function ContactSection() {
             variants={fadeUp}
             style={{
               color: "#4A4540",
-              fontSize: "18px",
+              fontSize: "clamp(15px, 2vw, 18px)",
               lineHeight: 1.8,
               fontWeight: 300,
               maxWidth: "620px",
-              margin: "24px auto 0",
+              margin: "clamp(16px, 2vw, 24px) auto 0",
             }}
           >
             Tell us about your project and let's create
@@ -175,8 +200,8 @@ export default function ContactSection() {
           style={{
             display: "grid",
             gridTemplateColumns:
-              "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: "32px",
+              "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
+            gap: "clamp(20px, 3vw, 32px)",
             alignItems: "start",
           }}
         >
@@ -189,26 +214,26 @@ export default function ContactSection() {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "24px",
+              gap: "clamp(16px, 2vw, 24px)",
             }}
           >
             {[
               {
                 icon: Mail,
                 title: "Email",
-                val: "hello@nexora.studio",
+                val: "nandhakumar200523@gmail.com",
                 color: "#FF6B2C",
               },
               {
                 icon: Phone,
                 title: "Phone",
-                val: "+1 (555) 123-4567",
-                color: "#1A1A1A",
+                val: "+91 8072764231",
+                color: "#FF6B2C",
               },
               {
                 icon: MapPin,
                 title: "Location",
-                val: "San Francisco, CA",
+                val: "Chennai, Tambaram",
                 color: "#FF6B2C",
               },
             ].map((item, i) => (
@@ -217,28 +242,39 @@ export default function ContactSection() {
                 style={{
                   display: "flex",
                   alignItems: "flex-start",
-                  gap: "18px",
+                  gap: "clamp(14px, 2vw, 18px)",
                   background: "#FFFFFF",
-                  border: "1px solid #EAE6E1",
-                  borderRadius: "24px",
-                  padding: "24px",
+                  border: "2px solid #FF6B2C",
+                  borderRadius: "clamp(20px, 2.5vw, 24px)",
+                  padding: "clamp(20px, 2.5vw, 24px)",
                   transition: "all 0.3s ease",
+                  boxShadow: "0 4px 16px rgba(255,107,44,0.08), 0 0 0 2px rgba(255,107,44,0.03)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                  e.currentTarget.style.boxShadow = "0 8px 24px rgba(255,107,44,0.15), 0 0 0 4px rgba(255,107,44,0.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "0 4px 16px rgba(255,107,44,0.08), 0 0 0 2px rgba(255,107,44,0.03)";
                 }}
               >
                 <div
                   style={{
-                    width: "52px",
-                    height: "52px",
-                    borderRadius: "16px",
-                    background: `${item.color}15`,
+                    width: "clamp(44px, 6vw, 52px)",
+                    height: "clamp(44px, 6vw, 52px)",
+                    borderRadius: "clamp(12px, 1.8vw, 16px)",
+                    background: "linear-gradient(135deg, rgba(255,107,44,0.12) 0%, rgba(255,107,44,0.06) 100%)",
+                    border: "1.5px solid rgba(255,107,44,0.2)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     flexShrink: 0,
+                    boxShadow: "0 4px 12px rgba(255,107,44,0.1)",
                   }}
                 >
                   <item.icon
-                    size={22}
+                    size={20}
                     color={item.color}
                   />
                 </div>
@@ -247,7 +283,7 @@ export default function ContactSection() {
                   <p
                     style={{
                       color: "#8A8480",
-                      fontSize: "12px",
+                      fontSize: "clamp(11px, 1.2vw, 12px)",
                       fontFamily:
                         "'Space Mono', monospace",
                       textTransform: "uppercase",
@@ -262,8 +298,9 @@ export default function ContactSection() {
                     style={{
                       color: "#0A0A0A",
                       fontWeight: 600,
-                      fontSize: "16px",
+                      fontSize: "clamp(14px, 1.5vw, 16px)",
                       margin: 0,
+                      fontFamily: "'DM Sans', sans-serif",
                     }}
                   >
                     {item.val}
@@ -275,76 +312,95 @@ export default function ContactSection() {
             {/* Availability Card */}
             <div
               style={{
-                background: "#111111",
-                borderRadius: "28px",
-                padding: "28px",
+                background: "linear-gradient(135deg, rgba(255,107,44,0.05) 0%, rgba(255,107,44,0.02) 100%)",
+                borderRadius: "clamp(20px, 2.5vw, 28px)",
+                padding: "clamp(24px, 3vw, 28px)",
                 color: "#FFFFFF",
+                border: "2px solid #FF6B2C",
+                backdropFilter: "blur(10px)",
+                boxShadow: "0 8px 24px rgba(255,107,44,0.1)",
+                position: "relative",
+                overflow: "hidden",
               }}
             >
+              {/* Gradient overlay */}
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  marginBottom: "18px",
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(135deg, rgba(255,107,44,0.15) 0%, rgba(255,107,44,0.05) 100%)",
+                  pointerEvents: "none",
                 }}
-              >
-                <span
+              />
+              
+              <div style={{ position: "relative", zIndex: 1 }}>
+                <div
                   style={{
-                    width: "10px",
-                    height: "10px",
-                    borderRadius: "50%",
-                    background: "#4ADE80",
-                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    marginBottom: "clamp(14px, 2vw, 18px)",
                   }}
                 >
                   <span
                     style={{
-                      position: "absolute",
-                      inset: 0,
+                      width: "10px",
+                      height: "10px",
                       borderRadius: "50%",
                       background: "#4ADE80",
-                      opacity: 0.5,
-                      animation:
-                        "pulse 1.5s infinite",
+                      position: "relative",
+                      boxShadow: "0 0 12px rgba(74,222,128,0.5)",
                     }}
-                  />
-                </span>
+                  >
+                    <span
+                      style={{
+                        position: "absolute",
+                        inset: "-4px",
+                        borderRadius: "50%",
+                        background: "#4ADE80",
+                        opacity: 0.3,
+                        animation:
+                          "pulse 1.5s infinite",
+                      }}
+                    />
+                  </span>
 
-                <span
+                  <span
+                    style={{
+                      fontSize: "clamp(11px, 1.2vw, 12px)",
+                      color: "#0A0A0A",
+                      fontFamily:
+                        "'Space Mono', monospace",
+                      textTransform: "uppercase",
+                      letterSpacing: "1px",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Currently Available
+                  </span>
+                </div>
+
+                <p
                   style={{
-                    fontSize: "12px",
-                    color: "rgba(255,255,255,0.6)",
-                    fontFamily:
-                      "'Space Mono', monospace",
-                    textTransform: "uppercase",
-                    letterSpacing: "1px",
+                    color: "#4A4540",
+                    lineHeight: 1.8,
+                    fontSize: "clamp(14px, 1.5vw, 15px)",
+                    fontWeight: 400,
+                    margin: 0,
                   }}
                 >
-                  Currently Available
-                </span>
+                  We take on 2–3 new clients per month.
+                  Our earliest availability is{" "}
+                  <span
+                    style={{
+                      color: "#FF6B2C",
+                      fontWeight: 600,
+                    }}
+                  >
+                    June 2026.
+                  </span>
+                </p>
               </div>
-
-              <p
-                style={{
-                  color: "rgba(255,255,255,0.7)",
-                  lineHeight: 1.8,
-                  fontSize: "15px",
-                  fontWeight: 300,
-                  margin: 0,
-                }}
-              >
-                We take on 2–3 new clients per month.
-                Our earliest availability is{" "}
-                <span
-                  style={{
-                    color: "#FF6B2C",
-                    fontWeight: 600,
-                  }}
-                >
-                  June 2026.
-                </span>
-              </p>
             </div>
           </motion.div>
 
@@ -359,11 +415,12 @@ export default function ContactSection() {
             }}
             style={{
               background: "#FFFFFF",
-              border: "1px solid #EAE6E1",
-              borderRadius: "36px",
-              padding: "42px",
+              border: "2px solid #FF6B2C",
+              borderRadius: "clamp(28px, 3vw, 36px)",
+              padding: "clamp(28px, 4vw, 42px)",
               boxShadow:
-                "0 10px 30px rgba(0,0,0,0.04)",
+                "0 4px 20px rgba(255,107,44,0.08), 0 0 0 4px rgba(255,107,44,0.03)",
+              transition: "all 0.3s ease",
             }}
           >
             {sent ? (
@@ -387,18 +444,19 @@ export default function ContactSection() {
               >
                 <div
                   style={{
-                    width: "72px",
-                    height: "72px",
+                    width: "clamp(60px, 8vw, 72px)",
+                    height: "clamp(60px, 8vw, 72px)",
                     borderRadius: "50%",
-                    background: "#ECFDF3",
+                    background: "linear-gradient(135deg, #ECFDF3 0%, #DCFCE7 100%)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginBottom: "24px",
+                    marginBottom: "clamp(20px, 3vw, 24px)",
+                    border: "2px solid #22C55E",
                   }}
                 >
                   <CheckCircle2
-                    size={34}
+                    size={30}
                     color="#22C55E"
                   />
                 </div>
@@ -407,7 +465,7 @@ export default function ContactSection() {
                   style={{
                     fontFamily:
                       "'DM Serif Display', Georgia, serif",
-                    fontSize: "36px",
+                    fontSize: "clamp(28px, 4vw, 36px)",
                     marginBottom: "12px",
                     color: "#0A0A0A",
                   }}
@@ -419,7 +477,7 @@ export default function ContactSection() {
                   style={{
                     color: "#8A8480",
                     fontWeight: 300,
-                    fontSize: "16px",
+                    fontSize: "clamp(14px, 1.5vw, 16px)",
                   }}
                 >
                   We'll get back to you within 24 hours.
@@ -428,13 +486,24 @@ export default function ContactSection() {
                 <button
                   onClick={() => setSent(false)}
                   style={{
-                    marginTop: "28px",
-                    background: "none",
-                    border: "none",
+                    marginTop: "clamp(24px, 3vw, 28px)",
+                    background: "linear-gradient(135deg, rgba(255,107,44,0.1) 0%, rgba(255,107,44,0.05) 100%)",
+                    border: "2px solid #FF6B2C",
                     color: "#FF6B2C",
                     fontWeight: 600,
                     cursor: "pointer",
-                    fontSize: "14px",
+                    fontSize: "clamp(13px, 1.5vw, 14px)",
+                    padding: "12px 24px",
+                    borderRadius: "12px",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "#FF6B2C";
+                    e.currentTarget.style.color = "#FFFFFF";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "linear-gradient(135deg, rgba(255,107,44,0.1) 0%, rgba(255,107,44,0.05) 100%)";
+                    e.currentTarget.style.color = "#FF6B2C";
                   }}
                 >
                   Send another message
@@ -446,7 +515,7 @@ export default function ContactSection() {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: "28px",
+                  gap: "clamp(20px, 3vw, 28px)",
                 }}
               >
                 {/* Name + Email */}
@@ -454,8 +523,8 @@ export default function ContactSection() {
                   style={{
                     display: "grid",
                     gridTemplateColumns:
-                      "repeat(auto-fit, minmax(240px, 1fr))",
-                    gap: "20px",
+                      "repeat(auto-fit, minmax(min(240px, 100%), 1fr))",
+                    gap: "clamp(16px, 2vw, 20px)",
                   }}
                 >
                   {/* Name */}
@@ -463,10 +532,11 @@ export default function ContactSection() {
                     <label
                       style={{
                         display: "block",
-                        marginBottom: "10px",
+                        marginBottom: "clamp(8px, 1vw, 10px)",
                         fontWeight: 600,
-                        fontSize: "14px",
+                        fontSize: "clamp(13px, 1.5vw, 14px)",
                         color: "#0A0A0A",
+                        fontFamily: "'DM Sans', sans-serif",
                       }}
                     >
                       Your Name
@@ -489,17 +559,26 @@ export default function ContactSection() {
                       placeholder="Alex Johnson"
                       style={{
                         width: "100%",
-                        padding: "16px",
-                        borderRadius: "16px",
+                        padding: "clamp(14px, 2vw, 16px)",
+                        borderRadius: "clamp(12px, 1.8vw, 16px)",
                         border: errors.name
                           ? "2px solid #EF4444"
-                          : "2px solid transparent",
+                          : "2px solid #FF6B2C",
                         background: errors.name
                           ? "#FEF2F2"
-                          : "#F7F5F3",
-                        fontSize: "15px",
+                          : "linear-gradient(135deg, #FFF7F2 0%, #FFF0E8 100%)",
+                        fontSize: "clamp(14px, 1.5vw, 15px)",
                         outline: "none",
                         boxSizing: "border-box",
+                        transition: "all 0.3s ease",
+                        fontFamily: "'DM Sans', sans-serif",
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = "#FF6B2C";
+                        e.target.style.boxShadow = "0 0 0 3px rgba(255,107,44,0.1)";
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.boxShadow = "none";
                       }}
                     />
 
@@ -521,10 +600,11 @@ export default function ContactSection() {
                     <label
                       style={{
                         display: "block",
-                        marginBottom: "10px",
+                        marginBottom: "clamp(8px, 1vw, 10px)",
                         fontWeight: 600,
-                        fontSize: "14px",
+                        fontSize: "clamp(13px, 1.5vw, 14px)",
                         color: "#0A0A0A",
+                        fontFamily: "'DM Sans', sans-serif",
                       }}
                     >
                       Email Address
@@ -547,17 +627,26 @@ export default function ContactSection() {
                       placeholder="alex@company.com"
                       style={{
                         width: "100%",
-                        padding: "16px",
-                        borderRadius: "16px",
+                        padding: "clamp(14px, 2vw, 16px)",
+                        borderRadius: "clamp(12px, 1.8vw, 16px)",
                         border: errors.email
                           ? "2px solid #EF4444"
-                          : "2px solid transparent",
+                          : "2px solid #FF6B2C",
                         background: errors.email
                           ? "#FEF2F2"
-                          : "#F7F5F3",
-                        fontSize: "15px",
+                          : "linear-gradient(135deg, #FFF7F2 0%, #FFF0E8 100%)",
+                        fontSize: "clamp(14px, 1.5vw, 15px)",
                         outline: "none",
                         boxSizing: "border-box",
+                        transition: "all 0.3s ease",
+                        fontFamily: "'DM Sans', sans-serif",
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = "#FF6B2C";
+                        e.target.style.boxShadow = "0 0 0 3px rgba(255,107,44,0.1)";
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.boxShadow = "none";
                       }}
                     />
 
@@ -580,10 +669,11 @@ export default function ContactSection() {
                   <label
                     style={{
                       display: "block",
-                      marginBottom: "12px",
+                      marginBottom: "clamp(10px, 1.5vw, 12px)",
                       fontWeight: 600,
-                      fontSize: "14px",
+                      fontSize: "clamp(13px, 1.5vw, 14px)",
                       color: "#0A0A0A",
+                      fontFamily: "'DM Sans', sans-serif",
                     }}
                   >
                     Project Budget
@@ -593,7 +683,7 @@ export default function ContactSection() {
                     style={{
                       display: "flex",
                       flexWrap: "wrap",
-                      gap: "10px",
+                      gap: "clamp(8px, 1vw, 10px)",
                     }}
                   >
                     {budgets.map((b) => (
@@ -607,25 +697,36 @@ export default function ContactSection() {
                           })
                         }
                         style={{
-                          padding: "12px 18px",
-                          borderRadius: "14px",
+                          padding: "clamp(10px, 1.5vw, 12px) clamp(14px, 2vw, 18px)",
+                          borderRadius: "clamp(10px, 1.5vw, 14px)",
                           border:
                             form.budget === b
                               ? "2px solid #FF6B2C"
-                              : "2px solid #EAE6E1",
+                              : "2px solid #FF6B2C",
                           background:
                             form.budget === b
                               ? "#FF6B2C"
-                              : "#F7F5F3",
+                              : "transparent",
                           color:
                             form.budget === b
                               ? "#FFFFFF"
-                              : "#4A4540",
+                              : "#FF6B2C",
                           fontWeight: 500,
-                          fontSize: "13px",
+                          fontSize: "clamp(12px, 1.3vw, 13px)",
                           cursor: "pointer",
                           transition:
                             "all 0.3s ease",
+                          fontFamily: "'DM Sans', sans-serif",
+                        }}
+                        onMouseEnter={(e) => {
+                          if (form.budget !== b) {
+                            e.currentTarget.style.background = "rgba(255,107,44,0.1)";
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (form.budget !== b) {
+                            e.currentTarget.style.background = "transparent";
+                          }
                         }}
                       >
                         {b}
@@ -639,10 +740,11 @@ export default function ContactSection() {
                   <label
                     style={{
                       display: "block",
-                      marginBottom: "10px",
+                      marginBottom: "clamp(8px, 1vw, 10px)",
                       fontWeight: 600,
-                      fontSize: "14px",
+                      fontSize: "clamp(13px, 1.5vw, 14px)",
                       color: "#0A0A0A",
+                      fontFamily: "'DM Sans', sans-serif",
                     }}
                   >
                     Project Details
@@ -665,19 +767,28 @@ export default function ContactSection() {
                     placeholder="Tell us about your project, timeline, and goals..."
                     style={{
                       width: "100%",
-                      padding: "18px",
-                      borderRadius: "18px",
+                      padding: "clamp(16px, 2vw, 18px)",
+                      borderRadius: "clamp(14px, 2vw, 18px)",
                       border: errors.message
                         ? "2px solid #EF4444"
-                        : "2px solid transparent",
+                        : "2px solid #FF6B2C",
                       background: errors.message
                         ? "#FEF2F2"
-                        : "#F7F5F3",
-                      fontSize: "15px",
+                        : "linear-gradient(135deg, #FFF7F2 0%, #FFF0E8 100%)",
+                      fontSize: "clamp(14px, 1.5vw, 15px)",
                       resize: "none",
                       outline: "none",
                       lineHeight: 1.7,
                       boxSizing: "border-box",
+                      fontFamily: "'DM Sans', sans-serif",
+                      transition: "all 0.3s ease",
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = "#FF6B2C";
+                      e.target.style.boxShadow = "0 0 0 3px rgba(255,107,44,0.1)";
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.boxShadow = "none";
                     }}
                   />
 
@@ -702,18 +813,34 @@ export default function ContactSection() {
                     width: "100%",
                     background: "#FF6B2C",
                     color: "#FFFFFF",
-                    border: "none",
-                    borderRadius: "18px",
-                    padding: "18px",
+                    border: "2px solid #FF6B2C",
+                    borderRadius: "clamp(14px, 2vw, 18px)",
+                    padding: "clamp(16px, 2vw, 18px)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     gap: "10px",
-                    fontSize: "15px",
+                    fontSize: "clamp(14px, 1.5vw, 15px)",
                     fontWeight: 600,
                     cursor: "pointer",
                     transition: "all 0.3s ease",
                     opacity: sending ? 0.7 : 1,
+                    fontFamily: "'DM Sans', sans-serif",
+                    boxShadow: "0 4px 16px rgba(255,107,44,0.2)",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!sending) {
+                      e.currentTarget.style.background = "#E5520E";
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.boxShadow = "0 8px 24px rgba(255,107,44,0.3)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!sending) {
+                      e.currentTarget.style.background = "#FF6B2C";
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "0 4px 16px rgba(255,107,44,0.2)";
+                    }
                   }}
                 >
                   {sending ? (
@@ -745,6 +872,29 @@ export default function ContactSection() {
           </motion.div>
         </div>
       </div>
+
+      {/* CSS Styles */}
+      <style>{`
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.3;
+            transform: scale(1.8);
+          }
+        }
+        
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </section>
   );
 }

@@ -31,12 +31,12 @@ export default function Footer() {
           style={{
             maxWidth: "1280px",
             margin: "0 auto",
-            padding: "64px 24px",
+            padding: "clamp(40px, 6vw, 64px) clamp(16px, 4vw, 24px)",
             display: "flex",
             flexWrap: "wrap",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "32px",
+            gap: "clamp(24px, 4vw, 32px)",
           }}
         >
           <div>
@@ -44,7 +44,7 @@ export default function Footer() {
               style={{
                 color: "rgba(255,255,255,0.5)",
                 fontFamily: "'Space Mono', monospace",
-                fontSize: "14px",
+                fontSize: "clamp(12px, 1.5vw, 14px)",
                 textTransform: "uppercase",
                 letterSpacing: "0.2em",
                 marginBottom: "8px",
@@ -55,7 +55,7 @@ export default function Footer() {
 
             <h3
               style={{
-                fontSize: "clamp(2rem, 5vw, 4rem)",
+                fontSize: "clamp(1.8rem, 5vw, 4rem)",
                 lineHeight: 1.1,
                 color: "#FFFFFF",
                 margin: 0,
@@ -82,13 +82,14 @@ export default function Footer() {
               gap: "12px",
               background: "var(--orange)",
               color: "#FFFFFF",
-              padding: "16px 32px",
+              padding: "clamp(14px, 2vw, 16px) clamp(24px, 3vw, 32px)",
               borderRadius: "18px",
               fontWeight: 600,
-              fontSize: "15px",
+              fontSize: "clamp(14px, 1.5vw, 15px)",
               textDecoration: "none",
               transition: "all 0.3s ease",
               whiteSpace: "nowrap",
+              fontFamily: "'DM Sans', sans-serif",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = "var(--orange-dark)";
@@ -113,16 +114,16 @@ export default function Footer() {
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "64px 24px",
+          padding: "clamp(40px, 6vw, 64px) clamp(16px, 4vw, 24px)",
         }}
       >
         {/* Grid */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-            gap: "48px",
-            marginBottom: "64px",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(180px, 100%), 1fr))",
+            gap: "clamp(32px, 5vw, 48px)",
+            marginBottom: "clamp(40px, 6vw, 64px)",
           }}
         >
           {/* Brand */}
@@ -147,6 +148,7 @@ export default function Footer() {
                   alignItems: "center",
                   justifyContent: "center",
                   flexShrink: 0,
+                  boxShadow: "0 4px 16px rgba(255,107,44,0.3)",
                 }}
               >
                 <span
@@ -154,9 +156,10 @@ export default function Footer() {
                     fontWeight: 700,
                     color: "#FFFFFF",
                     fontSize: "18px",
+                    fontFamily: "'DM Sans', sans-serif",
                   }}
                 >
-                  N
+                  NK
                 </span>
               </div>
 
@@ -166,9 +169,10 @@ export default function Footer() {
                   fontWeight: 600,
                   fontSize: "18px",
                   letterSpacing: "-0.02em",
+                  fontFamily: "'DM Sans', sans-serif",
                 }}
               >
-                Nexora
+                NK dev
                 <span style={{ color: "var(--orange)" }}>.</span>
               </span>
             </a>
@@ -176,7 +180,7 @@ export default function Footer() {
             <p
               style={{
                 color: "rgba(255,255,255,0.45)",
-                fontSize: "14px",
+                fontSize: "clamp(13px, 1.5vw, 14px)",
                 lineHeight: 1.7,
                 fontWeight: 300,
                 maxWidth: "240px",
@@ -203,16 +207,17 @@ export default function Footer() {
                   background: "#4ADE80",
                   position: "relative",
                   display: "inline-block",
+                  boxShadow: "0 0 12px rgba(74,222,128,0.5)",
                 }}
               >
                 <span
                   style={{
                     position: "absolute",
-                    inset: 0,
+                    inset: "-4px",
                     borderRadius: "50%",
                     background: "#4ADE80",
                     animation: "ping 1.5s infinite",
-                    opacity: 0.7,
+                    opacity: 0.3,
                   }}
                 />
               </span>
@@ -220,7 +225,7 @@ export default function Footer() {
               <span
                 style={{
                   color: "rgba(255,255,255,0.45)",
-                  fontSize: "12px",
+                  fontSize: "clamp(11px, 1.2vw, 12px)",
                   fontFamily: "'Space Mono', monospace",
                 }}
               >
@@ -235,11 +240,11 @@ export default function Footer() {
               <h4
                 style={{
                   color: "rgba(255,255,255,0.55)",
-                  fontSize: "11px",
+                  fontSize: "clamp(10px, 1.2vw, 11px)",
                   fontFamily: "'Space Mono', monospace",
                   textTransform: "uppercase",
                   letterSpacing: "0.18em",
-                  marginBottom: "20px",
+                  marginBottom: "clamp(16px, 2vw, 20px)",
                 }}
               >
                 {cat}
@@ -252,7 +257,7 @@ export default function Footer() {
                   margin: 0,
                   display: "flex",
                   flexDirection: "column",
-                  gap: "14px",
+                  gap: "clamp(10px, 1.5vw, 14px)",
                 }}
               >
                 {links.map((link) => (
@@ -262,8 +267,9 @@ export default function Footer() {
                       style={{
                         color: "rgba(255,255,255,0.5)",
                         textDecoration: "none",
-                        fontSize: "14px",
+                        fontSize: "clamp(13px, 1.5vw, 14px)",
                         transition: "color 0.25s ease",
+                        fontFamily: "'DM Sans', sans-serif",
                       }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.color = "#FFFFFF";
@@ -286,30 +292,30 @@ export default function Footer() {
         <div
           style={{
             borderTop: "1px solid rgba(255,255,255,0.1)",
-            paddingTop: "32px",
+            paddingTop: "clamp(24px, 3vw, 32px)",
             display: "flex",
             flexWrap: "wrap",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "20px",
+            gap: "clamp(16px, 2vw, 20px)",
           }}
         >
           <p
             style={{
               color: "rgba(255,255,255,0.3)",
-              fontSize: "13px",
+              fontSize: "clamp(12px, 1.3vw, 13px)",
               fontFamily: "'Space Mono', monospace",
               margin: 0,
             }}
           >
-            © 2026 Nexora Studio. All rights reserved.
+            © 2026 NK dev. All rights reserved.
           </p>
 
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "24px",
+              gap: "clamp(16px, 2.5vw, 24px)",
               flexWrap: "wrap",
             }}
           >
@@ -320,7 +326,7 @@ export default function Footer() {
                 style={{
                   color: "rgba(255,255,255,0.3)",
                   textDecoration: "none",
-                  fontSize: "13px",
+                  fontSize: "clamp(12px, 1.3vw, 13px)",
                   fontFamily: "'Space Mono', monospace",
                   transition: "color 0.25s ease",
                 }}
@@ -372,6 +378,23 @@ export default function Footer() {
           </motion.button>
         </div>
       </div>
+
+      <style>{`
+        @keyframes ping {
+          0% {
+            transform: scale(1);
+            opacity: 0.3;
+          }
+          50% {
+            transform: scale(1.8);
+            opacity: 0.1;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 0.3;
+          }
+        }
+      `}</style>
     </footer>
   );
 }
