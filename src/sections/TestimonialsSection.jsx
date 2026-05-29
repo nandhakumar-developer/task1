@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 import { fadeUp, stagger } from "../utils/animations";
 
 const testimonials = [
@@ -33,30 +34,107 @@ const testimonials = [
     stars: 5,
     project: "E-commerce Redesign",
   },
+  {
+    name: "David Park",
+    role: "CTO, InnovateLab",
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80&auto=format&fit=crop",
+    feedback:
+      "The technical expertise combined with creative vision is rare to find. Nexora delivered a platform that exceeded our expectations in both performance and design.",
+    stars: 5,
+    project: "Web Application",
+  },
+  {
+    name: "Amanda Foster",
+    role: "Marketing Director, StyleCo",
+    avatar:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80&auto=format&fit=crop",
+    feedback:
+      "Working with Nexora was a game-changer. Their strategic approach to our rebrand helped us connect with a younger demographic while maintaining our core identity.",
+    stars: 5,
+    project: "Rebranding",
+  },
 ];
 
 export default function TestimonialsSection() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Duplicate testimonials for seamless loop
+  const duplicatedTestimonials = [...testimonials, ...testimonials, ...testimonials];
+
   return (
     <section
       style={{
-        padding: "120px 24px",
+        padding: "clamp(60px, 8vw, 120px) clamp(16px, 4vw, 24px)",
         background: "#FFFFFF",
         position: "relative",
         overflow: "hidden",
       }}
     >
-      {/* Background Blur */}
+      {/* Left side gradient overlay - stronger outer, lighter inner */}
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          top: 0,
+          bottom: 0,
+          width: "clamp(150px, 20vw, 300px)",
+          background: "linear-gradient(to right, rgba(255,107,44,0.15) 0%, rgba(255,107,44,0.08) 40%, rgba(255,107,44,0.02) 70%, transparent 100%)",
+          zIndex: 5,
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Right side gradient overlay - stronger outer, lighter inner */}
+      <div
+        style={{
+          position: "absolute",
+          right: 0,
+          top: 0,
+          bottom: 0,
+          width: "clamp(150px, 20vw, 300px)",
+          background: "linear-gradient(to left, rgba(255,107,44,0.15) 0%, rgba(255,107,44,0.08) 40%, rgba(255,107,44,0.02) 70%, transparent 100%)",
+          zIndex: 5,
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Background decorative elements - softer, more subtle */}
       <div
         style={{
           position: "absolute",
           bottom: "-100px",
           right: "-100px",
-          width: "320px",
-          height: "320px",
+          width: "clamp(250px, 35vw, 400px)",
+          height: "clamp(250px, 35vw, 400px)",
           borderRadius: "50%",
-          background: "#FFF0E8",
-          filter: "blur(100px)",
-          opacity: 0.7,
+          background: "radial-gradient(circle, rgba(255,107,44,0.06) 0%, rgba(255,107,44,0.03) 40%, transparent 70%)",
+          filter: "blur(80px)",
+          pointerEvents: "none",
+        }}
+      />
+      
+      {/* Top left decorative blob - very subtle */}
+      <div
+        style={{
+          position: "absolute",
+          top: "-50px",
+          left: "-50px",
+          width: "clamp(200px, 30vw, 350px)",
+          height: "clamp(200px, 30vw, 350px)",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(255,107,44,0.04) 0%, rgba(255,107,44,0.01) 40%, transparent 70%)",
+          filter: "blur(80px)",
           pointerEvents: "none",
         }}
       />
@@ -80,8 +158,8 @@ export default function TestimonialsSection() {
             justifyContent: "space-between",
             alignItems: "flex-end",
             flexWrap: "wrap",
-            gap: "24px",
-            marginBottom: "72px",
+            gap: "clamp(20px, 3vw, 24px)",
+            marginBottom: "clamp(48px, 8vw, 72px)",
           }}
         >
           {/* Left */}
@@ -89,16 +167,31 @@ export default function TestimonialsSection() {
             <motion.span
               variants={fadeUp}
               style={{
-                display: "inline-block",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "12px",
                 color: "#FF6B2C",
                 fontFamily: "'Space Mono', monospace",
-                fontSize: "13px",
+                fontSize: "clamp(11px, 1.5vw, 13px)",
                 letterSpacing: "2px",
                 textTransform: "uppercase",
-                marginBottom: "18px",
+                marginBottom: "clamp(14px, 2vw, 18px)",
+                background: "linear-gradient(135deg, rgba(255,107,44,0.1) 0%, rgba(255,107,44,0.05) 100%)",
+                padding: "8px 16px",
+                borderRadius: "999px",
+                border: "1px solid rgba(255,107,44,0.2)",
               }}
             >
-              — Client Love
+              <span
+                style={{
+                  width: "8px",
+                  height: "8px",
+                  borderRadius: "50%",
+                  background: "#FF6B2C",
+                  animation: "pulse 2s ease-in-out infinite",
+                }}
+              />
+              Client Love
             </motion.span>
 
             <motion.h2
@@ -106,7 +199,7 @@ export default function TestimonialsSection() {
               style={{
                 fontFamily:
                   "'DM Serif Display', Georgia, serif",
-                fontSize: "clamp(2.5rem, 5vw, 4.8rem)",
+                fontSize: "clamp(2.2rem, 5vw, 4.8rem)",
                 lineHeight: 1,
                 color: "#0A0A0A",
                 margin: 0,
@@ -114,8 +207,19 @@ export default function TestimonialsSection() {
             >
               Results speak
               <br />
-              <span style={{ color: "#FF6B2C" }}>
+              <span style={{ color: "#FF6B2C", position: "relative" }}>
                 for themselves.
+                <span
+                  style={{
+                    position: "absolute",
+                    bottom: "-4px",
+                    left: 0,
+                    width: "100%",
+                    height: "3px",
+                    background: "linear-gradient(90deg, #FF6B2C, transparent)",
+                    borderRadius: "2px",
+                  }}
+                />
               </span>
             </motion.h2>
           </div>
@@ -126,11 +230,12 @@ export default function TestimonialsSection() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "16px",
-              background: "#F7F5F3",
-              padding: "18px 24px",
-              borderRadius: "24px",
-              border: "1px solid #EAE6E1",
+              gap: "clamp(12px, 2vw, 16px)",
+              background: "linear-gradient(135deg, #FFF7F2 0%, #FFF0E8 100%)",
+              padding: "clamp(16px, 2vw, 18px) clamp(20px, 2.5vw, 24px)",
+              borderRadius: "clamp(20px, 2.5vw, 24px)",
+              border: "2px solid rgba(255,107,44,0.2)",
+              boxShadow: "0 8px 24px rgba(255,107,44,0.08)",
             }}
           >
             {/* Avatars */}
@@ -140,18 +245,19 @@ export default function TestimonialsSection() {
                 marginLeft: "8px",
               }}
             >
-              {testimonials.map((t, i) => (
+              {testimonials.slice(0, 3).map((t, i) => (
                 <img
                   key={i}
                   src={t.avatar}
                   alt={t.name}
                   style={{
-                    width: "42px",
-                    height: "42px",
+                    width: "clamp(36px, 4vw, 42px)",
+                    height: "clamp(36px, 4vw, 42px)",
                     borderRadius: "50%",
                     objectFit: "cover",
                     border: "3px solid white",
                     marginLeft: i === 0 ? 0 : "-12px",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
                   }}
                 />
               ))}
@@ -172,6 +278,9 @@ export default function TestimonialsSection() {
                     size={14}
                     fill="#FF6B2C"
                     color="#FF6B2C"
+                    style={{
+                      filter: "drop-shadow(0 2px 4px rgba(255,107,44,0.3))",
+                    }}
                   />
                 ))}
               </div>
@@ -180,7 +289,7 @@ export default function TestimonialsSection() {
                 style={{
                   margin: 0,
                   color: "#8A8480",
-                  fontSize: "12px",
+                  fontSize: "clamp(11px, 1.2vw, 12px)",
                   fontFamily:
                     "'Space Mono', monospace",
                 }}
@@ -190,153 +299,234 @@ export default function TestimonialsSection() {
             </div>
           </motion.div>
         </motion.div>
+      </div>
 
-        {/* Testimonial Cards */}
+      {/* Infinite Carousel - Continuous scrolling without pause on hover */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          overflow: "hidden",
+        }}
+      >
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(320px, 1fr))",
-            gap: "24px",
+            display: "flex",
+            gap: "clamp(16px, 2vw, 24px)",
+            animation: `scroll ${duplicatedTestimonials.length * 4}s linear infinite`,
+            width: "fit-content",
+            padding: "20px 0",
           }}
         >
-          {testimonials.map((t, i) => (
-            <motion.div
+          {duplicatedTestimonials.map((t, i) => (
+            <div
               key={i}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                delay: i * 0.12,
-                duration: 0.6,
-              }}
-              whileHover={{
-                y: -6,
-              }}
               style={{
-                background: "#F7F5F3",
-                border: "1px solid #EAE6E1",
-                borderRadius: "32px",
-                padding: "36px",
-                position: "relative",
-                transition: "all 0.4s ease",
+                minWidth: isMobile ? "85vw" : "clamp(380px, 40vw, 450px)",
+                maxWidth: isMobile ? "85vw" : "clamp(380px, 40vw, 450px)",
+                flexShrink: 0,
               }}
             >
-              {/* Quote Icon */}
               <div
                 style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "16px",
-                  background: "rgba(255,107,44,0.1)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "24px",
+                  background: "linear-gradient(135deg, #FFFFFF 0%, #FFF8F5 100%)",
+                  border: "2px solid #FF6B2C",
+                  borderRadius: "clamp(24px, 3vw, 32px)",
+                  padding: "clamp(28px, 4vw, 36px)",
+                  position: "relative",
+                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                  cursor: "pointer",
+                  height: "100%",
+                  boxShadow: "0 4px 20px rgba(255,107,44,0.08), 0 0 0 4px rgba(255,107,44,0.02)",
+                }}
+                className="testimonial-card"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
+                  e.currentTarget.style.boxShadow = "0 16px 40px rgba(255,107,44,0.15), 0 0 0 8px rgba(255,107,44,0.04)";
+                  e.currentTarget.style.background = "linear-gradient(135deg, #FFFFFF 0%, #FFF3EE 100%)";
+                  e.currentTarget.style.borderColor = "#FF6B2C";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0) scale(1)";
+                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(255,107,44,0.08), 0 0 0 4px rgba(255,107,44,0.02)";
+                  e.currentTarget.style.background = "linear-gradient(135deg, #FFFFFF 0%, #FFF8F5 100%)";
+                  e.currentTarget.style.borderColor = "#FF6B2C";
                 }}
               >
-                <Quote
-                  size={22}
-                  color="#FF6B2C"
-                />
-              </div>
-
-              {/* Stars */}
-              <div
-                style={{
-                  display: "flex",
-                  gap: "5px",
-                  marginBottom: "20px",
-                }}
-              >
-                {[...Array(t.stars)].map((_, si) => (
-                  <Star
-                    key={si}
-                    size={16}
-                    fill="#FF6B2C"
-                    color="#FF6B2C"
-                  />
-                ))}
-              </div>
-
-              {/* Feedback */}
-              <p
-                style={{
-                  color: "#4A4540",
-                  lineHeight: 1.9,
-                  fontWeight: 300,
-                  fontSize: "15px",
-                  marginBottom: "36px",
-                }}
-              >
-                "{t.feedback}"
-              </p>
-
-              {/* Bottom */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "14px",
-                }}
-              >
-                <img
-                  src={t.avatar}
-                  alt={t.name}
+                {/* Corner accent */}
+                <div
                   style={{
-                    width: "54px",
-                    height: "54px",
-                    borderRadius: "18px",
-                    objectFit: "cover",
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    width: "80px",
+                    height: "80px",
+                    background: "linear-gradient(135deg, transparent 50%, rgba(255,107,44,0.06) 50%)",
+                    borderRadius: "0 0 0 80px",
+                    transition: "all 0.3s ease",
                   }}
+                  className="testimonial-corner"
                 />
 
-                <div>
-                  <div
-                    style={{
-                      fontWeight: 600,
-                      color: "#0A0A0A",
-                      fontSize: "15px",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    {t.name}
-                  </div>
-
-                  <div
-                    style={{
-                      color: "#8A8480",
-                      fontSize: "12px",
-                      fontFamily:
-                        "'Space Mono', monospace",
-                    }}
-                  >
-                    {t.role}
-                  </div>
-                </div>
-
-                {/* Project Badge */}
-                <span
+                {/* Quote Icon */}
+                <div
                   style={{
-                    marginLeft: "auto",
-                    padding: "8px 14px",
-                    borderRadius: "999px",
-                    background:
-                      "rgba(255,107,44,0.1)",
-                    color: "#FF6B2C",
-                    fontSize: "11px",
-                    fontFamily:
-                      "'Space Mono', monospace",
-                    whiteSpace: "nowrap",
+                    width: "clamp(40px, 5vw, 48px)",
+                    height: "clamp(40px, 5vw, 48px)",
+                    borderRadius: "clamp(12px, 1.5vw, 16px)",
+                    background: "linear-gradient(135deg, rgba(255,107,44,0.12) 0%, rgba(255,107,44,0.06) 100%)",
+                    border: "1.5px solid rgba(255,107,44,0.2)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "clamp(20px, 3vw, 24px)",
+                    boxShadow: "0 4px 12px rgba(255,107,44,0.08)",
                   }}
                 >
-                  {t.project}
-                </span>
+                  <Quote
+                    size={20}
+                    color="#FF6B2C"
+                  />
+                </div>
+
+                {/* Stars */}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "5px",
+                    marginBottom: "clamp(16px, 2vw, 20px)",
+                  }}
+                >
+                  {[...Array(t.stars)].map((_, si) => (
+                    <Star
+                      key={si}
+                      size={16}
+                      fill="#FF6B2C"
+                      color="#FF6B2C"
+                      style={{
+                        filter: "drop-shadow(0 2px 4px rgba(255,107,44,0.3))",
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* Feedback */}
+                <p
+                  style={{
+                    color: "#4A4540",
+                    lineHeight: 1.9,
+                    fontWeight: 300,
+                    fontSize: "clamp(14px, 1.5vw, 15px)",
+                    marginBottom: "clamp(28px, 4vw, 36px)",
+                    fontStyle: "italic",
+                  }}
+                >
+                  "{t.feedback}"
+                </p>
+
+                {/* Bottom */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "clamp(12px, 1.5vw, 14px)",
+                  }}
+                >
+                  <img
+                    src={t.avatar}
+                    alt={t.name}
+                    style={{
+                      width: "clamp(48px, 6vw, 54px)",
+                      height: "clamp(48px, 6vw, 54px)",
+                      borderRadius: "clamp(14px, 2vw, 18px)",
+                      objectFit: "cover",
+                      border: "3px solid #FF6B2C",
+                      boxShadow: "0 4px 12px rgba(255,107,44,0.15)",
+                    }}
+                  />
+
+                  <div style={{ flex: 1 }}>
+                    <div
+                      style={{
+                        fontWeight: 600,
+                        color: "#0A0A0A",
+                        fontSize: "clamp(14px, 1.5vw, 15px)",
+                        marginBottom: "4px",
+                        fontFamily: "'DM Sans', sans-serif",
+                      }}
+                    >
+                      {t.name}
+                    </div>
+
+                    <div
+                      style={{
+                        color: "#8A8480",
+                        fontSize: "clamp(11px, 1.2vw, 12px)",
+                        fontFamily:
+                          "'Space Mono', monospace",
+                      }}
+                    >
+                      {t.role}
+                    </div>
+                  </div>
+
+                  {/* Project Badge */}
+                  <span
+                    style={{
+                      padding: "clamp(6px, 1vw, 8px) clamp(12px, 1.5vw, 14px)",
+                      borderRadius: "999px",
+                      background: "linear-gradient(135deg, rgba(255,107,44,0.1) 0%, rgba(255,107,44,0.05) 100%)",
+                      border: "1.5px solid rgba(255,107,44,0.2)",
+                      color: "#FF6B2C",
+                      fontSize: "clamp(10px, 1.2vw, 11px)",
+                      fontFamily:
+                        "'Space Mono', monospace",
+                      whiteSpace: "nowrap",
+                      fontWeight: 500,
+                      boxShadow: "0 2px 8px rgba(255,107,44,0.08)",
+                    }}
+                  >
+                    {t.project}
+                  </span>
+                </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
+
+      {/* CSS Styles */}
+      <style>{`
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.5;
+            transform: scale(1.5);
+          }
+        }
+        
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-33.333%);
+          }
+        }
+        
+        .testimonial-card:hover .testimonial-corner {
+          background: linear-gradient(135deg, transparent 50%, rgba(255,107,44,0.15) 50%) !important;
+        }
+        
+        @media (max-width: 768px) {
+          .testimonial-card {
+            border-width: 1.5px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
